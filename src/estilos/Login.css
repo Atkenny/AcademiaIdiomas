@@ -79,6 +79,51 @@
   50% { transform: translateY(-8px); }
 }
 
+/* Estilos para logos institucionales en PC */
+.login-institucional-pc {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  margin-bottom: 8px;
+  box-sizing: border-box;
+}
+
+.institucional-logo-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+}
+
+.institucional-logo-img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4px;
+}
+
+.institucional-logo-titulo {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.4;
+  opacity: 0.95;
+}
+
+/* Logos en vista móvil (ocultos por defecto en PC) */
+.login-logos-movil {
+  display: none;
+}
+
 .marca-titulo {
   font-size: 38px;
   font-weight: 800;
@@ -127,6 +172,15 @@
   font-weight: 800;
   color: var(--color-texto-titulo);
   letter-spacing: -0.8px;
+}
+
+.login-titulo-secundario {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-primario);
+  margin-top: -6px;
+  margin-bottom: 2px;
+  letter-spacing: -0.5px;
 }
 
 .login-subtitulo {
@@ -460,6 +514,45 @@
   opacity: 1;
 }
 
+/* Selector de idioma flotante premium */
+.login-selector-idioma {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 2px solid var(--color-borde-input);
+  border-radius: 12px;
+  padding: 6px 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  z-index: 100;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.login-selector-idioma:hover {
+  border-color: var(--color-primario);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.1);
+}
+
+.selector-globe-icono {
+  color: var(--color-primario);
+  flex-shrink: 0;
+}
+
+.selector-select {
+  border: none;
+  background: transparent;
+  color: var(--color-texto-titulo);
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  padding-right: 4px;
+}
+
 /* 8. Responsividad (Mobile-First) */
 @media (max-width: 960px) {
   .login-lateral-marca {
@@ -467,6 +560,34 @@
   }
   .login-lateral-formulario {
     flex: 1;
-    padding: 48px 24px;
+    padding: 32px 20px;
+  }
+  .login-logos-movil {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+    background: rgba(2, 132, 199, 0.05);
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(2, 132, 199, 0.1);
+  }
+  .login-logo-movil-img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
+    border-radius: 4px;
+    background: #ffffff;
+    padding: 2px;
+  }
+  .login-selector-idioma {
+    top: 16px;
+    right: 16px;
+    padding: 4px 10px;
+  }
+  .selector-select {
+    font-size: 13.5px;
   }
 }

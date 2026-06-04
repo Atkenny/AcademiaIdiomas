@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useIdioma } from '../../contextos/IdiomaContexto';
 
 export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
+  const { idioma, cambiarIdioma, t } = useIdioma();
   const nombreUsuario = usuario.email.split('@')[0];
   const [descargaMensaje, setDescargaMensaje] = useState('');
   const [recursoVisualizar, setRecursoVisualizar] = useState(null);
@@ -228,10 +230,10 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
       <div style={{ textAlign: 'left', borderBottom: '2px solid var(--borde-color)', paddingBottom: '16px' }}>
         <h3 style={{ fontSize: '22px', fontWeight: '800', color: '#1e293b', margin: '0 0 6px 0' }}>
-          Tablón de Recursos Compartidos
+          {t('tablonRecurso')}
         </h3>
         <p style={{ fontSize: '16px', color: '#64748b', margin: 0 }}>
-          Accede a las últimas guías, avisos y enlaces de apoyo compartidos por tus docentes.
+          {t('tablonSub')}
         </p>
       </div>
 
@@ -308,7 +310,35 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
   if (verTodosLosCursos) {
     return (
       <div className="progreso-vista" style={{ width: '100%', boxSizing: 'border-box' }}>
-        
+        {/* Banner institucional de logos y Bryan Wilson (Oculto en móvil) */}
+        {!esMovil && (
+          <div className="institucional-cabecera-logos" style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '20px',
+            flexWrap: 'wrap',
+            marginBottom: '28px',
+            padding: '16px 24px',
+            backgroundColor: '#ffffff',
+            borderRadius: '16px',
+            border: '2px solid var(--borde-color)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <img src="/unan_logo.webp" alt="UNAN" style={{ height: '38px', objectFit: 'contain' }} />
+              <span style={{ fontSize: '13px', fontWeight: '800', color: '#475569' }}>UNAN-MANAGUA</span>
+            </div>
+            <div style={{ width: '2px', height: '24px', backgroundColor: 'var(--borde-color)' }} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <img src="/setec_logo.webp" alt="SETEC" style={{ height: '38px', objectFit: 'contain' }} />
+              <span style={{ fontSize: '13px', fontWeight: '800', color: '#475569' }}>SETEC</span>
+            </div>
+            <div style={{ width: '2px', height: '24px', backgroundColor: 'var(--borde-color)' }} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ fontSize: '13.5px', fontWeight: '900', color: 'var(--color-celeste)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Bryan Wilson</span>
+            </div>
+          </div>
+        )}
+
         {/* Encabezado con Botón de Regreso */}
         <div className="vista-header" style={{ marginBottom: '32px', textAlign: 'left' }}>
           <button 
@@ -324,14 +354,14 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
               fontWeight: '800'
             }}
           >
-            ← Volver al Inicio
+            {t('volverInicio')}
           </button>
           
           <h2 className="vista-titulo" style={{ fontSize: '34px', color: '#1e293b', fontWeight: '800', marginBottom: '8px' }}>
-            Mis Cursos Académicos
+            {t('misCursosAcademicos')}
           </h2>
           <p className="vista-descripcion" style={{ fontSize: '18px', color: '#64748b', margin: 0 }}>
-            Explora tus asignaturas activas en formato de tarjetas, cuadrícula o lista, y filtra tus preferidos.
+            {t('bienvenidaSub')}
           </p>
         </div>
 
@@ -353,7 +383,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
             <input 
               type="text" 
               className="buscar-input" 
-              placeholder="Buscar por curso, nivel o profesor..." 
+              placeholder={t('buscarCurso')}
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               style={{ height: '44px', paddingLeft: '44px' }}
@@ -376,7 +406,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
               <svg viewBox="0 0 24 24" width="16" height="16" fill={filtroFavoritos ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2.5">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
               </svg>
-              <span>{filtroFavoritos ? 'Mostrar Todos' : 'Sólo Favoritos'}</span>
+              <span>{filtroFavoritos ? t('mostrarTodos') : t('soloFavoritos')}</span>
             </button>
 
             {/* Selectores de Layout */}
@@ -439,8 +469,8 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                 <line x1="12" y1="8" x2="12" y2="12" />
                 <line x1="12" y1="16" x2="12.01" y2="16" />
               </svg>
-              <h4 style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: '0 0 6px 0' }}>No se encontraron cursos</h4>
-              <p style={{ fontSize: '15px', margin: 0 }}>Intenta modificar los filtros de búsqueda o favoritos.</p>
+              <h4 style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: '0 0 6px 0' }}>{t('noCursos')}</h4>
+              <p style={{ fontSize: '15px', margin: 0 }}>{t('noCursosSub')}</p>
             </div>
           ) : (
             
@@ -468,7 +498,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                       onClick={() => toggleFavorito(curso.id)} 
                       className="btn-favorito" 
                       style={{ position: 'absolute', top: '16px', right: '16px' }}
-                      title={favoritos.includes(curso.id) ? "Quitar de favoritos" : "Marcar como favorito"}
+                      title={favoritos.includes(curso.id) ? t('quitarFavorito') : t('marcarFavorito')}
                     >
                       <svg viewBox="0 0 24 24" width="22" height="22" fill={favoritos.includes(curso.id) ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2.5">
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
@@ -487,7 +517,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                           padding: '4px 10px', 
                           borderRadius: '8px' 
                         }}>
-                          NIVEL {curso.nivel}
+                          {t('nivel')} {curso.nivel}
                         </span>
                         <h4 style={{ fontSize: '22px', fontWeight: '800', color: '#1e293b', margin: '8px 0 4px 0', letterSpacing: '-0.5px' }}>
                           {curso.nombre}
@@ -500,8 +530,8 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14.5px', fontWeight: '700', color: '#64748b' }}>
-                        <span>Avance del Curso</span>
-                        <span style={{ color: curso.color, fontWeight: '800' }}>{curso.progreso}% completado</span>
+                        <span>{t('avanceCurso')}</span>
+                        <span style={{ color: curso.color, fontWeight: '800' }}>{curso.progreso}% {t('completado')}</span>
                       </div>
                       <div style={{ height: '10px', backgroundColor: '#e2e8f0', borderRadius: '5px', overflow: 'hidden' }}>
                         <div style={{ height: '100%', width: `${curso.progreso}%`, backgroundColor: curso.color, borderRadius: '5px' }} />
@@ -513,7 +543,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                       className="btn-manual-accion primario"
                       style={{ height: '50px', fontSize: '15px', marginTop: '4px', flex: 'none', width: '100%' }}
                     >
-                      Ingresar al Aula Virtual
+                      {t('ingresarAula')}
                     </button>
                   </div>
                 ))}
@@ -553,7 +583,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                       {curso.bandera}
                       <div style={{ textAlign: 'left' }}>
                         <span style={{ fontSize: '11px', fontWeight: '800', color: curso.color }}>
-                          NIVEL {curso.nivel}
+                          {t('nivel')} {curso.nivel}
                         </span>
                         <h4 style={{ fontSize: '17px', fontWeight: '800', color: '#1e293b', margin: '2px 0 0 0', letterSpacing: '-0.25px' }}>
                           {curso.nombre}
@@ -562,9 +592,9 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left' }}>
-                      <span style={{ fontSize: '13px', color: '#64748b' }}>Prof: {curso.profesor}</span>
+                      <span style={{ fontSize: '13px', color: '#64748b' }}>{t('prof')}: {curso.profesor}</span>
                       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12.5px', fontWeight: '700', color: '#64748b' }}>
-                        <span>Progreso</span>
+                        <span>{t('avanceCurso')}</span>
                         <span>{curso.progreso}%</span>
                       </div>
                       <div style={{ height: '6px', backgroundColor: '#e2e8f0', borderRadius: '3px', overflow: 'hidden' }}>
@@ -577,7 +607,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                       className="btn-manual-accion primario"
                       style={{ height: '36px', fontSize: '13.5px', flex: 'none', width: '100%', borderRadius: '10px' }}
                     >
-                      Ingresar
+                      {t('ingresar')}
                     </button>
                   </div>
                 ))}
@@ -597,7 +627,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                         {curso.nombre}
                       </h4>
                       <span style={{ fontSize: '12.5px', fontWeight: '700', color: curso.color }}>
-                        Nivel {curso.nivel}
+                        {t('nivel')} {curso.nivel}
                       </span>
                     </div>
                   </div>
@@ -610,7 +640,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                   {/* Progreso */}
                   <div style={{ width: '30%', display: 'flex', flexDirection: 'column', gap: '6px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', fontWeight: '700', color: '#64748b' }}>
-                      <span>Progreso del Curso</span>
+                      <span>{t('avanceCurso')}</span>
                       <span>{curso.progreso}%</span>
                     </div>
                     <div style={{ height: '8px', backgroundColor: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
@@ -625,7 +655,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                     <button 
                       onClick={() => toggleFavorito(curso.id)} 
                       className="btn-favorito"
-                      title={favoritos.includes(curso.id) ? "Quitar de favoritos" : "Marcar como favorito"}
+                      title={favoritos.includes(curso.id) ? t('quitarFavorito') : t('marcarFavorito')}
                     >
                       <svg viewBox="0 0 24 24" width="22" height="22" fill={favoritos.includes(curso.id) ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2.5">
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
@@ -638,7 +668,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                       className="btn-manual-accion primario"
                       style={{ height: '40px', fontSize: '13.5px', padding: '0 20px', flex: 'none', width: 'auto', borderRadius: '12px' }}
                     >
-                      Ingresar
+                      {t('ingresar')}
                     </button>
 
                   </div>
@@ -684,12 +714,40 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
   // VISTA 2: Dashboard de Inicio Normal (Con Carrusel de Cursos y Tablón)
   return (
     <div className="progreso-vista" style={{ width: '100%', boxSizing: 'border-box' }}>
-      
+      {/* Banner institucional de logos y Bryan Wilson (Oculto en móvil) */}
+      {!esMovil && (
+        <div className="institucional-cabecera-logos" style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '20px',
+          flexWrap: 'wrap',
+          marginBottom: '28px',
+          padding: '16px 24px',
+          backgroundColor: '#ffffff',
+          borderRadius: '16px',
+          border: '2px solid var(--borde-color)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <img src="/unan_logo.webp" alt="UNAN" style={{ height: '38px', objectFit: 'contain' }} />
+            <span style={{ fontSize: '13px', fontWeight: '800', color: '#475569' }}>UNAN-MANAGUA</span>
+          </div>
+          <div style={{ width: '2px', height: '24px', backgroundColor: 'var(--borde-color)' }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <img src="/setec_logo.webp" alt="SETEC" style={{ height: '38px', objectFit: 'contain' }} />
+            <span style={{ fontSize: '13px', fontWeight: '800', color: '#475569' }}>SETEC</span>
+          </div>
+          <div style={{ width: '2px', height: '24px', backgroundColor: 'var(--borde-color)' }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ fontSize: '13.5px', fontWeight: '900', color: 'var(--color-celeste)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Bryan Wilson</span>
+          </div>
+        </div>
+      )}
+
       {/* Encabezado Principal */}
       <div className="vista-header" style={{ marginBottom: '28px', textAlign: 'left' }}>
-        <h2 className="vista-titulo" style={{ fontSize: '34px', color: '#1e293b', fontWeight: '800', marginBottom: '8px' }}>Panel de Inicio</h2>
+        <h2 className="vista-titulo" style={{ fontSize: '34px', color: '#1e293b', fontWeight: '800', marginBottom: '8px' }}>{t('panelInicio')}</h2>
         <p className="vista-descripcion" style={{ fontSize: '18px', color: '#64748b', margin: 0 }}>
-          Bienvenido, <strong>{nombreUsuario}</strong>. Consulta tus novedades académicas y accede directamente a tus aulas.
+          {t('bienvenido')}, <strong>{nombreUsuario}</strong>. {t('bienvenidaSub')}
         </p>
       </div>
 
@@ -701,7 +759,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
               <h3 style={{ fontSize: '22px', fontWeight: '800', color: '#1e293b', margin: '0' }}>
-                Mis Cursos Activos
+                {t('misCursosActivos')}
               </h3>
               
               {/* Botón Ver Todo */}
@@ -719,7 +777,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                   width: 'auto'
                 }}
               >
-                Ver todo
+                {t('verTodo')}
               </button>
             </div>
             
@@ -820,7 +878,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                           padding: '4px 10px', 
                           borderRadius: '8px' 
                         }}>
-                          NIVEL {curso.nivel}
+                          {t('nivel')} {curso.nivel}
                         </span>
                         <h4 style={{ fontSize: '22px', fontWeight: '800', color: '#1e293b', margin: '8px 0 4px 0', letterSpacing: '-0.5px' }}>
                           {curso.nombre}
@@ -834,8 +892,8 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                     {/* Progreso */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14.5px', fontWeight: '700', color: '#64748b' }}>
-                        <span>Avance del Ciclo</span>
-                        <span style={{ color: curso.color, fontWeight: '800' }}>{curso.progreso}% completado</span>
+                        <span>{t('avanceCiclo')}</span>
+                        <span style={{ color: curso.color, fontWeight: '800' }}>{curso.progreso}% {t('completado')}</span>
                       </div>
                       <div style={{ height: '10px', backgroundColor: '#e2e8f0', borderRadius: '5px', overflow: 'hidden' }}>
                         <div style={{ height: '100%', width: `${curso.progreso}%`, backgroundColor: curso.color, borderRadius: '5px' }} />
@@ -848,7 +906,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                       className="btn-manual-accion primario"
                       style={{ height: '50px', fontSize: '15px', marginTop: '4px', flex: 'none', width: '100%' }}
                     >
-                      Ingresar al Aula Virtual
+                      {t('ingresarAula')}
                     </button>
                   </div>
                 ))}
@@ -893,7 +951,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
         <div className="modal-overlay" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.4)', backdropFilter: 'blur(4px)', zIndex: 1000 }} onClick={() => setRecursoVisualizar(null)}>
           <div className="modal-contenedor card-premium" style={{ width: '600px', maxWidth: '90%', padding: '0', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
             <header className="modal-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 24px', borderBottom: '2px solid var(--borde-color)' }}>
-              <h3 className="modal-titulo" style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: '#1e293b' }}>Visualizando Recurso Compartido</h3>
+              <h3 className="modal-titulo" style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: '#1e293b' }}>{t('visualizandoRecurso')}</h3>
               <button onClick={() => setRecursoVisualizar(null)} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', display: 'flex' }}>
                 <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.5" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
@@ -919,7 +977,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                     <h5 style={{ fontWeight: '800', marginTop: '0', fontSize: '16.5px', color: '#1e293b' }}>Enlace de Recurso Externo</h5>
                     <p>Has abierto el recurso complementario en video para el estudio de pronombres relativos (<em>dont, où, qui, que</em>) en Francés B2.</p>
                     <p>Este video contiene 15 minutos de explicaciones interactivas por profesores nativos, analizando las diferencias sutiles entre "dont" (relativo posesivo/preposicional) y "où" (relativo de lugar o tiempo).</p>
-                    <a href="#video-ver" onClick={(e) => {e.preventDefault(); alert('Simulación: Reproduciendo video de clase grabada...');}} style={{ color: 'var(--color-celeste)', fontWeight: '800', textDecoration: 'underline' }}>Haga clic aquí para reproducir la lección en video</a>
+                    <a href="#video-ver" onClick={(e) => {e.preventDefault(); alert(t('simulacionReproduccion'));}} style={{ color: 'var(--color-celeste)', fontWeight: '800', textDecoration: 'underline' }}>Haga clic aquí para reproducir la lección en video</a>
                   </div>
                 )}
               </div>
@@ -927,19 +985,19 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                 <button 
                   className="btn-manual-accion primario" 
                   onClick={() => {
-                    alert('Simulación: Iniciando descarga del archivo físico en su dispositivo.');
+                    alert(t('simulacionDescarga'));
                     setRecursoVisualizar(null);
                   }}
                   style={{ flex: 'none', padding: '0 20px', height: '40px', fontSize: '13.5px' }}
                 >
-                  Descargar Archivo
+                  {t('descargarArchivo')}
                 </button>
                 <button 
                   className="btn-manual-accion secundario" 
                   onClick={() => setRecursoVisualizar(null)} 
                   style={{ flex: 'none', padding: '0 20px', height: '40px', fontSize: '13.5px' }}
                 >
-                  Cerrar Vista
+                  {t('cerrarVista')}
                 </button>
               </div>
             </div>

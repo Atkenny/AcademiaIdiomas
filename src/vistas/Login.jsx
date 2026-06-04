@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../estilos/Login.css';
+import { useIdioma } from '../contextos/IdiomaContexto';
 
 /**
  * Componente: Login
@@ -8,6 +9,7 @@ import '../estilos/Login.css';
  * @param {function} alIniciarSesion - Callback cuando el inicio de sesión es exitoso. Recibe { email, rol }.
  */
 export default function Login({ alIniciarSesion }) {
+  const { idioma, cambiarIdioma, t } = useIdioma();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [mostrarPassword, setMostrarPassword] = useState(false);
@@ -30,7 +32,7 @@ export default function Login({ alIniciarSesion }) {
       setAlerta({
         tipo: 'exito',
         value: rolSeleccionado,
-        mensaje: `Acceso concedido (Beta). Cargando portal de ${rolSeleccionado === 'estudiante' ? 'Estudiante' : 'Docente'}...`
+        mensaje: t('accesoConcedidoBeta') + (rolSeleccionado === 'estudiante' ? t('estudiante') : t('docente')) + '...'
       });
 
       setTimeout(() => {
@@ -43,7 +45,7 @@ export default function Login({ alIniciarSesion }) {
   const manejarSubmit = (e) => {
     e.preventDefault();
     if (!email || !password) {
-      setAlerta({ tipo: 'error', mensaje: 'Por favor, completa todos los campos.' });
+      setAlerta({ tipo: 'error', mensaje: t('alertaCompletar') });
       return;
     }
 
@@ -59,7 +61,7 @@ export default function Login({ alIniciarSesion }) {
         setCargando(false);
         setAlerta({
           tipo: 'exito',
-          mensaje: 'Acceso concedido. Cargando portal de Estudiante...'
+          mensaje: t('accesoConcedido') + t('estudiante') + '...'
         });
         setTimeout(() => {
           alIniciarSesion({ email: emailNormalizado, rol: 'estudiante' });
@@ -71,7 +73,7 @@ export default function Login({ alIniciarSesion }) {
         setCargando(false);
         setAlerta({
           tipo: 'exito',
-          mensaje: 'Acceso concedido. Cargando portal de Docente...'
+          mensaje: t('accesoConcedido') + t('docente') + '...'
         });
         setTimeout(() => {
           alIniciarSesion({ email: emailNormalizado, rol: 'docente' });
@@ -80,27 +82,44 @@ export default function Login({ alIniciarSesion }) {
     } else {
       setAlerta({
         tipo: 'error',
-        mensaje: 'Credenciales de prueba inválidas. Revisa las cuentas beta de abajo.'
+        mensaje: t('alertaCredenciales')
       });
     }
   };
 
   return (
     <div className="login-pantalla">
-      
+      {/* Selector Flotante de Idioma */}
+      <div className="login-selector-idioma">
+        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" className="selector-globe-icono">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="2" y1="12" x2="22" y2="12" />
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+        </svg>
+        <select value={idioma} onChange={(e) => cambiarIdioma(e.target.value)} className="selector-select" aria-label="Cambiar idioma / Change language">
+          <option value="es">Español</option>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+          <option value="it">Italiano</option>
+          <option value="ru">Русский</option>
+        </select>
+      </div>
+
       {/* PANEL IZQUIERDO: Marca e Inspiración (Se oculta en móvil) */}
       <aside className="login-lateral-marca">
         <div className="marca-contenido">
-          {/* Icono de Globo + Libro grande y detallado */}
-          <svg className="marca-logo-svg" viewBox="0 0 24 24" width="80" height="80" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M4 19.5V15a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v4.5M2 10l10-6 10 6-10 6-10-6z" />
-            <path d="M6 14v4c0 1.5 1.5 2.5 6 2.5s6-1 6-2.5v-4" />
-            <circle cx="12" cy="10" r="1" opacity="0.5" />
-          </svg>
-          <h2 className="marca-titulo">Conecta con el Mundo</h2>
-          <p className="marca-subtitulo">
-            Únete a nuestra academia de idiomas y adquiere nuevas herramientas para tu futuro profesional y personal de la mano de docentes calificados.
-          </p>
+          {/* Logos Institucionales con Títulos en PC */}
+          <div className="login-institucional-pc">
+            <div className="institucional-logo-item">
+              <img src="/unan_logo.webp" alt="UNAN Managua" className="institucional-logo-img" />
+              <span className="institucional-logo-titulo">Universidad Nacional Autónoma de Nicaragua, Managua (UNAN-Managua)</span>
+            </div>
+            <div className="institucional-logo-item">
+              <img src="/setec_logo.webp" alt="SETEC" className="institucional-logo-img" />
+              <span className="institucional-logo-titulo">Secretaría Técnica para Atención a las Universidades (SETEC)</span>
+            </div>
+          </div>
         </div>
       </aside>
 
@@ -110,10 +129,17 @@ export default function Login({ alIniciarSesion }) {
         {/* Contenedor del Formulario (Grande y Cómodo) */}
         <div className="login-contenedor">
           
+          {/* Logos institucionales adaptados para vista móvil (Visibles solo en pantallas pequeñas) */}
+          <div className="login-logos-movil">
+            <img src="/unan_logo.webp" alt="UNAN Managua" className="login-logo-movil-img" />
+            <img src="/setec_logo.webp" alt="SETEC" className="login-logo-movil-img" />
+          </div>
+
           {/* Encabezado */}
           <header className="login-encabezado">
-            <h1 className="login-titulo">Academia de Idiomas</h1>
-            <p className="login-subtitulo">Ingresa tus credenciales de acceso para comenzar</p>
+            <h1 className="login-titulo">{t('academia')}</h1>
+            <h2 className="login-titulo-secundario">{t('heroe')}</h2>
+            <p className="login-subtitulo">{t('lema')}</p>
           </header>
 
           {/* Formulario de Login Único */}
@@ -122,14 +148,14 @@ export default function Login({ alIniciarSesion }) {
             {/* Correo Electrónico */}
             <div className="login-grupo">
               <label className="login-label" htmlFor="email-input">
-                Correo Electrónico
+                {t('emailLabel')}
               </label>
               <div className="login-input-wrapper">
                 <input
                   id="email-input"
                   className="login-input"
                   type="email"
-                  placeholder="ejemplo@academia.com"
+                  placeholder={t('emailPlaceholder')}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={cargando}
@@ -146,14 +172,14 @@ export default function Login({ alIniciarSesion }) {
             {/* Contraseña */}
             <div className="login-grupo">
               <label className="login-label" htmlFor="password-input">
-                Contraseña
+                {t('passwordLabel')}
               </label>
               <div className="login-input-wrapper">
                 <input
                   id="password-input"
                   className="login-input"
                   type={mostrarPassword ? 'text' : 'password'}
-                  placeholder="••••••••"
+                  placeholder={t('passwordPlaceholder')}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={cargando}
@@ -193,10 +219,10 @@ export default function Login({ alIniciarSesion }) {
             <div className="login-opciones">
               <label className="login-recordar">
                 <input type="checkbox" disabled={cargando} />
-                Recordarme
+                {t('recordarme')}
               </label>
               <a href="#olvido" className="login-olvido" onClick={(e) => e.preventDefault()}>
-                ¿Olvidaste la contraseña?
+                {t('olvidoContra')}
               </a>
             </div>
 
@@ -223,10 +249,10 @@ export default function Login({ alIniciarSesion }) {
               {cargando ? (
                 <>
                   <div className="spinner" />
-                  Validando...
+                  {t('validando')}
                 </>
               ) : (
-                'Iniciar Sesión'
+                t('iniciarSesion')
               )}
             </button>
 
@@ -234,9 +260,9 @@ export default function Login({ alIniciarSesion }) {
 
           {/* Crear Cuenta */}
           <div className="login-crear-cuenta">
-            <span>¿No tienes una cuenta?</span>
+            <span>{t('noCuenta')}</span>
             <a href="#registro" className="login-link-registro" onClick={(e) => e.preventDefault()}>
-              Crear cuenta
+              {t('crearCuenta')}
             </a>
           </div>
 
@@ -249,11 +275,11 @@ export default function Login({ alIniciarSesion }) {
                 onClick={() => setMostrarOpcionesBeta(true)}
                 disabled={cargando}
               >
-                Prueba Beta
+                {t('pruebaBeta')}
               </button>
             ) : (
               <div className="login-beta-opciones">
-                <p className="beta-opciones-titulo">Selecciona tu rol de prueba:</p>
+                <p className="beta-opciones-titulo">{t('seleccionaRol')}</p>
                 <div className="beta-opciones-botones">
                   <button 
                     type="button" 
@@ -261,7 +287,7 @@ export default function Login({ alIniciarSesion }) {
                     onClick={() => manejarLoginBeta('estudiante')}
                     disabled={cargando}
                   >
-                    Estudiante
+                    {t('estudiante')}
                   </button>
                   <button 
                     type="button" 
@@ -269,7 +295,7 @@ export default function Login({ alIniciarSesion }) {
                     onClick={() => manejarLoginBeta('docente')}
                     disabled={cargando}
                   >
-                    Docente
+                    {t('docente')}
                   </button>
                 </div>
                 <button 
@@ -278,7 +304,7 @@ export default function Login({ alIniciarSesion }) {
                   onClick={() => setMostrarOpcionesBeta(false)}
                   disabled={cargando}
                 >
-                  Regresar al login manual
+                  {t('regresarManual')}
                 </button>
               </div>
             )}

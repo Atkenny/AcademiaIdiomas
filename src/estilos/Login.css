@@ -1,0 +1,472 @@
+/* 
+ * Login.css (Rediseño Split-Screen - Celeste y Blanco)
+ * Aplica colores basados en Celeste Zafiro y Blanco, con componentes ampliados para mayor comodidad visual.
+ */
+
+:root {
+  /* Paleta de Colores: Tema Claro (Celeste y Blanco) */
+  --color-primario: #0284c7;          /* Celeste / Azul Cielo (Sky-600) - Alta legibilidad */
+  --color-primario-oscuro: #0369a1;   /* Celeste Oscuro (Sky-700) */
+  --color-secundario: #0284c7;        /* Celeste */
+  --color-secundario-oscuro: #0369a1;
+  
+  --color-fondo-pagina: #ffffff;      /* Integrado directamente sobre blanco */
+  --color-tarjeta: #ffffff;
+  --color-texto: #475569;
+  --color-texto-titulo: #0f172a;
+  --color-borde-input: #cbd5e1;
+  --color-sombra: rgba(2, 132, 199, 0.05); /* Sombra celeste */
+  --color-resplandor: rgba(255, 255, 255, 0.12); /* Brillo del logo */
+}
+
+/* 1. Estructura Principal del Split-Screen */
+.login-pantalla {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--color-fondo-pagina);
+  transition: background-color 0.3s ease;
+}
+
+/* 2. Panel Izquierdo (Marca en Degradado Celeste) */
+.login-lateral-marca {
+  flex: 1;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 48px;
+  color: #ffffff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+/* Efecto de resplandor radial blanco en el panel de marca */
+.login-lateral-marca::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, var(--color-resplandor) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.marca-contenido {
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  z-index: 2;
+}
+
+.marca-logo-svg {
+  color: #ffffff;
+  filter: drop-shadow(0 8px 20px rgba(255, 255, 255, 0.25));
+  animation: flotar 4s ease-in-out infinite;
+}
+
+@keyframes flotar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.marca-titulo {
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -1px;
+}
+
+.marca-subtitulo {
+  font-size: 17px;
+  line-height: 1.6;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+/* 3. Panel Derecho (Formulario de Login) */
+.login-lateral-formulario {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 48px 32px;
+  position: relative;
+  background-color: var(--color-fondo-pagina);
+  transition: background-color 0.3s ease;
+}
+
+/* Contenedor del Formulario (Ampliado para mayor tamaño global) */
+.login-contenedor {
+  width: 100%;
+  max-width: 420px; /* Ampliado a 420px para componentes más imponentes */
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* 4. Encabezado del Formulario */
+.login-encabezado {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.login-titulo {
+  font-size: 32px; /* Título más grande */
+  font-weight: 800;
+  color: var(--color-texto-titulo);
+  letter-spacing: -0.8px;
+}
+
+.login-subtitulo {
+  font-size: 16px;
+  color: var(--color-texto);
+  opacity: 0.85;
+}
+
+/* 5. Formulario */
+.login-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.login-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-label {
+  font-size: 15px; /* Etiqueta más grande */
+  font-weight: 700;
+  color: var(--color-texto);
+  text-align: left;
+  letter-spacing: 0.2px;
+}
+
+/* Inputs de 62px de alto (Más grandes e imponentes) */
+.login-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.login-input-wrapper svg.input-icono {
+  position: absolute;
+  left: 20px;
+  width: 24px; /* Iconos grandes */
+  height: 24px;
+  color: var(--color-texto);
+  opacity: 0.55;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.login-input {
+  width: 100%;
+  height: 62px; /* Altura aumentada de 56px a 62px */
+  padding: 0 16px 0 58px; /* Espacio para el icono de 24px */
+  border-radius: 16px; /* Bordes más curvos y modernos */
+  border: 2px solid var(--color-borde-input);
+  background-color: var(--color-tarjeta);
+  color: var(--color-texto-titulo);
+  font-size: 17px; /* Letra grande y legible */
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.login-input:focus {
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15);
+}
+
+.login-input:focus + svg.input-icono {
+  color: var(--color-primario);
+  opacity: 1;
+}
+
+/* Mostrar/Ocultar Contraseña */
+.btn-ver-password {
+  position: absolute;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--color-texto);
+  opacity: 0.55;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+}
+
+.btn-ver-password:hover {
+  color: var(--color-primario);
+  opacity: 1;
+}
+
+.btn-ver-password svg {
+  width: 24px; /* Aumentado a 24px */
+  height: 24px;
+}
+
+/* Opciones (Recordar y Olvido) */
+.login-opciones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px; /* Aumentado */
+  margin-top: 4px;
+}
+
+.login-recordar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  color: var(--color-texto);
+  opacity: 0.9;
+  user-select: none;
+}
+
+.login-recordar input {
+  width: 19px;
+  height: 19px;
+  cursor: pointer;
+  accent-color: var(--color-primario);
+}
+
+.login-olvido {
+  color: var(--color-primario);
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.2s ease;
+}
+
+.login-olvido:hover {
+  color: var(--color-primario-oscuro);
+  text-decoration: underline;
+}
+
+/* 6. Botón de Acción Principal (62px) */
+.login-btn-enviar {
+  background-color: var(--color-primario);
+  color: #ffffff;
+  border: none;
+  height: 62px; /* Altura aumentada de 56px a 62px */
+  border-radius: 16px;
+  font-size: 18px; /* Letra más grande */
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.15);
+  margin-top: 10px;
+}
+
+.login-btn-enviar:hover {
+  background-color: var(--color-primario-oscuro);
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.25);
+  transform: translateY(-1px);
+}
+
+.login-btn-enviar:active {
+  transform: translateY(0);
+}
+
+.login-btn-enviar:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Loader */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: girar 0.6s linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 7. Alertas */
+.login-alerta {
+  padding: 16px 20px;
+  border-radius: 12px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1.5px solid transparent;
+  text-align: left;
+}
+
+.login-alerta.exito {
+  background-color: rgba(16, 185, 129, 0.06);
+  border-color: rgba(16, 185, 129, 0.18);
+  color: #059669;
+}
+
+.login-alerta.error {
+  background-color: rgba(239, 68, 68, 0.06);
+  border-color: rgba(239, 68, 68, 0.18);
+  color: #dc2626;
+}
+
+
+.login-alerta svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Crear Cuenta */
+.login-crear-cuenta {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  font-size: 15px;
+  margin-top: 20px;
+  color: var(--color-texto);
+}
+
+.login-link-registro {
+  color: var(--color-primario);
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.2s ease;
+}
+
+.login-link-registro:hover {
+  color: var(--color-primario-oscuro);
+  text-decoration: underline;
+}
+
+/* Sección Beta Dinámica */
+.login-seccion-beta {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.btn-beta-principal {
+  width: 100%;
+  height: 62px; /* Mismo tamaño que inputs */
+  background: none;
+  border: 2px solid var(--color-primario);
+  color: var(--color-primario);
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-beta-principal:hover {
+  background-color: rgba(2, 132, 199, 0.05);
+}
+
+.login-beta-opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  border: 2px dashed var(--color-borde-input);
+  border-radius: 16px;
+  animation: fadeInBeta 0.25s ease-out;
+}
+
+@keyframes fadeInBeta {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.beta-opciones-titulo {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--color-texto-titulo);
+  text-align: center;
+}
+
+.beta-opciones-botones {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-beta-opcion {
+  flex: 1;
+  height: 52px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #ffffff;
+}
+
+/* Colores para las opciones beta (Estudiante celeste, Docente azul oscuro) */
+.btn-beta-opcion.estudiante {
+  background-color: #0284c7;
+}
+.btn-beta-opcion.estudiante:hover {
+  background-color: #0369a1;
+}
+
+.btn-beta-opcion.docente {
+  background-color: #0f172a;
+}
+.btn-beta-opcion.docente:hover {
+  background-color: #1e293b;
+}
+
+
+.btn-beta-cancelar {
+  background: none;
+  border: none;
+  color: var(--color-texto);
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  align-self: center;
+  opacity: 0.7;
+}
+
+.btn-beta-cancelar:hover {
+  opacity: 1;
+}
+
+/* 8. Responsividad (Mobile-First) */
+@media (max-width: 960px) {
+  .login-lateral-marca {
+    display: none;
+  }
+  .login-lateral-formulario {
+    flex: 1;
+    padding: 48px 24px;
+  }
+}

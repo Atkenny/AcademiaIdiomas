@@ -315,8 +315,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
           <div className="institucional-cabecera-logos" style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '20px',
-            flexWrap: 'wrap',
+            justifyContent: 'space-between',
             marginBottom: '28px',
             padding: '16px 24px',
             backgroundColor: '#ffffff',
@@ -327,14 +326,8 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
               <img src="/unan_logo.webp" alt="UNAN" style={{ height: '38px', objectFit: 'contain' }} />
               <span style={{ fontSize: '13px', fontWeight: '800', color: '#475569' }}>UNAN-MANAGUA</span>
             </div>
-            <div style={{ width: '2px', height: '24px', backgroundColor: 'var(--borde-color)' }} />
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
               <img src="/setec_logo.webp" alt="SETEC" style={{ height: '38px', objectFit: 'contain' }} />
-              <span style={{ fontSize: '13px', fontWeight: '800', color: '#475569' }}>SETEC</span>
-            </div>
-            <div style={{ width: '2px', height: '24px', backgroundColor: 'var(--borde-color)' }} />
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ fontSize: '13.5px', fontWeight: '900', color: 'var(--color-celeste)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Bryan Wilson</span>
             </div>
           </div>
         )}
@@ -719,8 +712,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
         <div className="institucional-cabecera-logos" style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '20px',
-          flexWrap: 'wrap',
+          justifyContent: 'space-between',
           marginBottom: '28px',
           padding: '16px 24px',
           backgroundColor: '#ffffff',
@@ -731,14 +723,8 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
             <img src="/unan_logo.webp" alt="UNAN" style={{ height: '38px', objectFit: 'contain' }} />
             <span style={{ fontSize: '13px', fontWeight: '800', color: '#475569' }}>UNAN-MANAGUA</span>
           </div>
-          <div style={{ width: '2px', height: '24px', backgroundColor: 'var(--borde-color)' }} />
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             <img src="/setec_logo.webp" alt="SETEC" style={{ height: '38px', objectFit: 'contain' }} />
-            <span style={{ fontSize: '13px', fontWeight: '800', color: '#475569' }}>SETEC</span>
-          </div>
-          <div style={{ width: '2px', height: '24px', backgroundColor: 'var(--borde-color)' }} />
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{ fontSize: '13.5px', fontWeight: '900', color: 'var(--color-celeste)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Bryan Wilson</span>
           </div>
         </div>
       )}

@@ -113,7 +113,7 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        gap: '20px',
+        justifyContent: 'space-between',
         flexWrap: 'wrap',
         padding: '16px 24px',
         backgroundColor: 'var(--color-tarjeta, #ffffff)',
@@ -126,16 +126,8 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
           <img src="/unan_logo.webp" alt="UNAN" style={{ height: '38px', objectFit: 'contain' }} />
           <span style={{ fontSize: '13px', fontWeight: '800', color: '#475569' }}>UNAN-MANAGUA</span>
         </div>
-        <div style={{ width: '2px', height: '24px', backgroundColor: 'var(--color-borde, #e2e8f0)' }} />
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           <img src="/setec_logo.webp" alt="SETEC" style={{ height: '38px', objectFit: 'contain' }} />
-          <span style={{ fontSize: '13px', fontWeight: '800', color: '#475569' }}>SETEC</span>
-        </div>
-        <div style={{ width: '2px', height: '24px', backgroundColor: 'var(--color-borde, #e2e8f0)' }} />
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <span style={{ fontSize: '13.5px', fontWeight: '900', color: 'var(--doc-primario)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-            Bryan Wilson
-          </span>
         </div>
       </div>
 

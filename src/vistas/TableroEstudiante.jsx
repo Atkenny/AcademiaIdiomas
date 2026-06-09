@@ -153,12 +153,11 @@ export default function TableroEstudiante({ usuario, alCerrarSesion }) {
             </svg>
             {!sidebarColapsado && <span className="idioma-label">{t('idioma')}:</span>}
             <select value={idioma} onChange={(e) => cambiarIdioma(e.target.value)} className="sidebar-idioma-select" aria-label="Cambiar idioma">
-              <option value="es">ES</option>
-              <option value="en">EN</option>
-              <option value="fr">FR</option>
-              <option value="de">DE</option>
-              <option value="it">IT</option>
-              <option value="ru">RU</option>
+              <option value="es">{sidebarColapsado ? 'ES' : 'Español'}</option>
+              <option value="en">{sidebarColapsado ? 'EN' : 'Inglés'}</option>
+              <option value="pt">{sidebarColapsado ? 'PT' : 'Portugués'}</option>
+              <option value="it">{sidebarColapsado ? 'IT' : 'Italiano'}</option>
+              <option value="fr">{sidebarColapsado ? 'FR' : 'Francés'}</option>
             </select>
           </div>
           
@@ -209,7 +208,7 @@ export default function TableroEstudiante({ usuario, alCerrarSesion }) {
             </svg>
           </button>
           
-          <div className="header-institucional-logos-movil">
+          <div className="header-institucional-logos-movil" style={{ display: 'flex', justifyContent: 'space-between', flex: 1, marginLeft: '16px' }}>
             <img src="/unan_logo.webp" alt="UNAN" className="header-inst-logo-movil" />
             <img src="/setec_logo.webp" alt="SETEC" className="header-inst-logo-movil" />
           </div>
@@ -277,11 +276,10 @@ export default function TableroEstudiante({ usuario, alCerrarSesion }) {
                 <span className="idioma-label">{t('idioma')}:</span>
                 <select value={idioma} onChange={(e) => cambiarIdioma(e.target.value)} className="drawer-idioma-select" aria-label="Cambiar idioma">
                   <option value="es">Español</option>
-                  <option value="en">English</option>
-                  <option value="fr">Français</option>
-                  <option value="de">Deutsch</option>
+                  <option value="en">Inglés</option>
+                  <option value="pt">Portugués</option>
                   <option value="it">Italiano</option>
-                  <option value="ru">Русский</option>
+                  <option value="fr">Francés</option>
                 </select>
               </div>
 

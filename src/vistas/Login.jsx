@@ -139,7 +139,6 @@ export default function Login({ alIniciarSesion }) {
           <header className="login-encabezado">
             <h1 className="login-titulo">{t('academia')}</h1>
             <h2 className="login-titulo-secundario">{t('heroe')}</h2>
-            <p className="login-subtitulo">{t('lema')}</p>
           </header>
 
           {/* Formulario de Login Único */}

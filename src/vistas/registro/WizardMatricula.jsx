@@ -95,6 +95,9 @@ export default function WizardMatricula({ curso, onVolver, onCompletar }) {
     if (e.target.name === 'cedula') {
       value = value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
     }
+    if (e.target.name === 'anioNac') {
+      value = value.replace(/\D/g, '').slice(0, 4);
+    }
     setDatos({ ...datos, [e.target.name]: value });
   };
 
@@ -215,11 +218,17 @@ export default function WizardMatricula({ curso, onVolver, onCompletar }) {
                   </div>
 
                   <div style={{ flex: 1.2 }}>
-                    <SelectorScrolleable 
-                      placeholder="Año"
-                      valor={datos.anioNac}
-                      onChange={(val) => handleCustomDateChange('anioNac', val)}
-                      opciones={Array.from({ length: 80 }, (_, i) => { const y = new Date().getFullYear() - 10 - i; return { value: y.toString(), label: y.toString() }; })}
+                    <input 
+                      className="login-input" 
+                      type="text" 
+                      name="anioNac" 
+                      value={datos.anioNac} 
+                      onChange={handleChange} 
+                      required 
+                      placeholder="Año" 
+                      maxLength="4"
+                      pattern="\d{4}"
+                      style={{ padding: '0 12px', textAlign: 'center' }}
                     />
                   </div>
                 </div>

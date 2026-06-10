@@ -25,6 +25,51 @@ export default function Login({ alIniciarSesion }) {
   const [cargando, setCargando] = useState(false);
   const [alerta, setAlerta] = useState(null); // { tipo: 'exito' | 'error', mensaje: string }
   const [mostrarOpcionesBeta, setMostrarOpcionesBeta] = useState(false);
+  const [datosDocenteRegistrado, setDatosDocenteRegistrado] = useState(null);
+
+  const descargarCredencialesPDF = () => {
+    if (!datosDocenteRegistrado) return;
+    const printWindow = window.open('', '', 'width=800,height=600');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Credenciales Docente</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 40px; color: #333; }
+            .card { border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; max-width: 500px; margin: 0 auto; }
+            h2 { color: #0284c7; margin-top: 0; }
+            .info { margin: 16px 0; background: #f8fafc; padding: 16px; border-radius: 8px; }
+            .label { font-weight: bold; color: #64748b; font-size: 14px; }
+            .value { font-size: 16px; margin-bottom: 12px; color: #0f172a; }
+            .footer { margin-top: 24px; font-size: 14px; color: #64748b; text-align: center; }
+          </style>
+        </head>
+        <body>
+          <div class="card">
+            <h2>Credenciales de Acceso</h2>
+            <p><strong>Academia de Idiomas Brian Wilson</strong></p>
+            <p>Hola <strong>${datosDocenteRegistrado.nombres}</strong>, estas son tus credenciales de acceso como docente:</p>
+            
+            <div class="info">
+              <div class="label">Correo Electrónico:</div>
+              <div class="value">${datosDocenteRegistrado.correo}</div>
+              
+              <div class="label">Contraseña:</div>
+              <div class="value">${datosDocenteRegistrado.password}</div>
+            </div>
+            
+            <p style="color: #b91c1c; font-weight: bold; text-align: center;">Importante: Confirma la verificación en tu correo para poder acceder.</p>
+            
+            <div class="footer">Por favor, guarda o imprime este documento en un lugar seguro.</div>
+          </div>
+          <script>
+            window.onload = function() { window.print(); window.close(); }
+          </script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  };
 
   // Iniciar sesión automáticamente con credenciales Beta
   const manejarLoginBeta = (rolSeleccionado) => {
@@ -186,23 +231,56 @@ export default function Login({ alIniciarSesion }) {
           {vistaActual === 'exito' && (
             <div className="login-contenedor" style={{ textAlign: 'center', justifyContent: 'center' }}>
               <div style={{ width: '80px', height: '80px', background: '#dcfce7', color: '#16a34a', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', fontSize: '40px', border: '2px solid #86efac', borderBottom: '4px solid #4ade80' }}>✓</div>
-              <h2 className="login-titulo">¡Solicitud en Espera!</h2>
-              <p className="login-titulo-secundario" style={{ marginBottom: '32px' }}>Tu solicitud ha sido recibida. Se te notificará en tu correo electrónico con la confirmación y tus credenciales de acceso una vez el docente te apruebe.</p>
+              <h2 className="login-titulo">📚 ¡Solicitud en espera!</h2>
+              <p className="login-titulo-secundario" style={{ marginBottom: '16px', textAlign: 'justify' }}>
+                Tu solicitud de matrícula ha sido recibida exitosamente.
+              </p>
+              <p className="login-titulo-secundario" style={{ marginBottom: '16px', textAlign: 'justify' }}>
+                En los próximos momentos recibirás un correo electrónico con la confirmación de tu matrícula y tus credenciales de acceso para ingresar a la plataforma. En caso de que exista algún inconveniente o sea necesario corregir algún dato proporcionado, se te notificará por este medio.
+              </p>
+              <p className="login-titulo-secundario" style={{ marginBottom: '32px', textAlign: 'center' }}>
+                ¡Gracias por ser parte de la <strong>Academia de Idiomas Brian Wilson</strong>! 💙
+              </p>
               <button className="login-btn-enviar" onClick={() => setVistaActual('login')}>Volver al Inicio</button>
             </div>
           )}
           {vistaActual === 'registroDocente' && (
             <RegistroDocente 
               onVolver={() => setVistaActual('login')} 
-              onCompletar={(datos) => setVistaActual('exitoDocente')} 
+              onCompletar={(datos) => {
+                setDatosDocenteRegistrado(datos);
+                setVistaActual('exitoDocente');
+              }} 
             />
           )}
           {vistaActual === 'exitoDocente' && (
             <div className="login-contenedor" style={{ textAlign: 'center', justifyContent: 'center' }}>
               <div style={{ width: '80px', height: '80px', background: '#dcfce7', color: '#16a34a', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', fontSize: '40px', border: '2px solid #86efac', borderBottom: '4px solid #4ade80' }}>✓</div>
               <h2 className="login-titulo">¡Registro Exitoso!</h2>
-              <p className="login-titulo-secundario" style={{ marginBottom: '32px' }}>Tu cuenta de docente independiente ha sido creada. Ahora puedes iniciar sesión con tu correo y contraseña.</p>
-              <button className="login-btn-enviar" onClick={() => setVistaActual('login')}>Volver al Inicio</button>
+              <p className="login-titulo-secundario" style={{ marginBottom: '16px' }}>
+                Tu cuenta de docente independiente ha sido creada exitosamente.
+              </p>
+              <div style={{ background: '#fef2f2', border: '1px solid #fecaca', padding: '16px', borderRadius: '12px', marginBottom: '24px' }}>
+                <p style={{ color: '#b91c1c', fontWeight: '800', margin: 0, fontSize: '15px' }}>
+                  ¡Atención! Confirma la verificación en tu correo para poder acceder.
+                </p>
+              </div>
+              
+              <button 
+                onClick={descargarCredencialesPDF}
+                style={{ background: '#f0f9ff', color: '#0284c7', border: '2px solid #bae6fd', borderBottom: '4px solid #7dd3fc', padding: '12px 24px', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', marginBottom: '16px', width: '100%', fontSize: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+                onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(2px)'; e.currentTarget.style.borderBottomWidth = '2px'; }}
+                onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderBottomWidth = '4px'; }}
+              >
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Guardar Credenciales en PDF
+              </button>
+              
+              <button className="login-btn-enviar" onClick={() => setVistaActual('login')} style={{ marginTop: '8px' }}>Volver al Inicio de Sesión</button>
             </div>
           )}
         </main>

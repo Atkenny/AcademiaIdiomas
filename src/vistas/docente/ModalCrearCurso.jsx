@@ -81,6 +81,7 @@ export default function ModalCrearCurso({ onClose, onCursoCreado, docenteId }) {
 
   // Estados del formulario
   const [nombre, setNombre] = useState('');
+  const [sede, setSede] = useState('');
   const [descripcion, setDescripcion] = useState('');
   
   // Fecha
@@ -149,8 +150,8 @@ export default function ModalCrearCurso({ onClose, onCursoCreado, docenteId }) {
 
   const manejarSubmit = async (e) => {
     e.preventDefault();
-    if (!nombre || !descripcion || !diaInicio || !mesInicio || !anioInicio || diasSeleccionados.length === 0 || !hInicioHora || !hFinHora || !cuposMaximos) {
-      setError('Por favor, completa todos los campos principales (Nombre, Descripción, Fecha, Días, Horario y Cupos).');
+    if (!nombre || !descripcion || !sede || !diaInicio || !mesInicio || !anioInicio || diasSeleccionados.length === 0 || !hInicioHora || !hFinHora || !cuposMaximos) {
+      setError('Por favor, completa todos los campos principales (Nombre, Descripción, Sede, Fecha, Días, Horario y Cupos).');
       return;
     }
 
@@ -178,6 +179,7 @@ export default function ModalCrearCurso({ onClose, onCursoCreado, docenteId }) {
         descripcion: descripcion,
         idioma: 'Español',
         nivel: 'Básico',
+        sede: sede,
         requisitos: JSON.stringify(requisitos),
         incluye: JSON.stringify(incluye),
         cupos_maximos: parseInt(cuposMaximos, 10),
@@ -215,8 +217,8 @@ export default function ModalCrearCurso({ onClose, onCursoCreado, docenteId }) {
 
   const avanzarPaso = () => {
     if (paso === 1) {
-      if (!nombre || !descripcion || !cuposMaximos) {
-        setError('Por favor completa el Nombre, Descripción y Cupos Máximos.');
+      if (!nombre || !descripcion || !sede || !cuposMaximos) {
+        setError('Por favor completa el Nombre, Descripción, Sede y Cupos Máximos.');
         return;
       }
     }
@@ -346,6 +348,17 @@ export default function ModalCrearCurso({ onClose, onCursoCreado, docenteId }) {
                       onChange={e => setCuposMaximos(e.target.value)}
                     />
                   </div>
+                </div>
+
+                <div className="doc-form-group">
+                  <label>Sede (Ubicación)</label>
+                  <input 
+                    type="text" 
+                    className="doc-input" 
+                    placeholder="Ej. Sede Managua, Recinto Rubén Darío" 
+                    value={sede}
+                    onChange={e => setSede(e.target.value)}
+                  />
                 </div>
                 
                 <div className="doc-form-group">

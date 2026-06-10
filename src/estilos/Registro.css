@@ -1,0 +1,379 @@
+/* Registro.css - Estilo Duolingo */
+
+.registro-contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  animation: docFadeIn 0.3s ease;
+}
+
+.registro-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.btn-volver {
+  background: none;
+  border: none;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  transition: all 0.2s;
+  margin-left: -12px;
+}
+
+.btn-volver:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.registro-titulo {
+  font-size: 24px;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0 0 5px 0;
+}
+
+.registro-subtitulo {
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Catálogo Grid */
+.catalogo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.curso-tarjeta {
+  background: #fff;
+  border: 2px solid #e2e8f0;
+  border-bottom: 4px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.curso-tarjeta:hover {
+  border-color: #0d9488;
+  border-bottom-color: #0f766e;
+  transform: translateY(-2px);
+}
+
+.curso-tarjeta:active {
+  border-bottom-width: 2px;
+  transform: translateY(2px);
+}
+
+.curso-idioma {
+  font-size: 12px;
+  font-weight: 800;
+  color: #0d9488;
+  background: #ccfbf1;
+  padding: 4px 10px;
+  border-radius: 20px;
+  align-self: flex-start;
+  margin-bottom: 12px;
+}
+
+.curso-nombre {
+  font-size: 18px;
+  font-weight: 900;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+}
+
+.curso-nivel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 16px;
+}
+
+.curso-btn {
+  margin-top: auto;
+  width: 100%;
+  padding: 10px;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-bottom: 4px solid #cbd5e1;
+  border-radius: 12px;
+  color: #334155;
+  font-weight: 800;
+  transition: all 0.2s;
+}
+
+.curso-tarjeta:hover .curso-btn {
+  background: #0d9488;
+  color: #fff;
+  border-color: #0d9488;
+  border-bottom-color: #0f766e;
+}
+
+/* Detalle Curso */
+.detalle-seccion {
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  border: 2px solid #e2e8f0;
+  border-bottom: 4px solid #cbd5e1;
+}
+
+.detalle-seccion h3 {
+  font-size: 16px;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.detalle-lista {
+  margin: 0;
+  padding-left: 20px;
+  color: #475569;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.detalle-lista li {
+  margin-bottom: 4px;
+}
+
+.gratuito-banner {
+  background: #dcfce7;
+  border: 2px solid #86efac;
+  border-bottom: 4px solid #4ade80;
+  color: #166534;
+  padding: 16px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  margin-bottom: 24px;
+}
+
+.btn-matricularse {
+  width: 100%;
+  padding: 16px;
+  background: #0d9488;
+  color: white;
+  border: 2px solid #0d9488;
+  border-bottom: 4px solid #0f766e;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.btn-matricularse:hover {
+  background: #0f766e;
+  transform: translateY(1px);
+  border-bottom-width: 3px;
+}
+
+.btn-matricularse:active {
+  transform: translateY(3px);
+  border-bottom-width: 0px;
+  margin-bottom: 4px;
+}
+
+/* Wizard */
+.wizard-progreso {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.wizard-progreso::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #e2e8f0;
+  z-index: 1;
+}
+
+.wizard-paso {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.paso-circulo {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: #64748b;
+  transition: all 0.3s;
+}
+
+.wizard-paso.activo .paso-circulo {
+  border-color: #0d9488;
+  color: #0d9488;
+  background: #ccfbf1;
+}
+
+.wizard-paso.completado .paso-circulo {
+  background: #0d9488;
+  border-color: #0d9488;
+  color: #fff;
+}
+
+.paso-texto {
+  font-size: 11px;
+  font-weight: 800;
+  color: #64748b;
+}
+
+.wizard-paso.activo .paso-texto {
+  color: #0d9488;
+}
+
+/* Formulario */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-grid.single {
+  grid-template-columns: 1fr;
+}
+
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wizard-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+@media (max-width: 600px) {
+  .wizard-footer {
+    flex-direction: column-reverse;
+    gap: 12px;
+  }
+  .wizard-footer button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.btn-wizard-sec {
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  color: #475569;
+  border: 2px solid #e2e8f0;
+  border-bottom: 4px solid #cbd5e1;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.btn-wizard-sec:hover {
+  background: #e2e8f0;
+}
+
+.btn-wizard-sec:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+.btn-wizard-pri {
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: #0d9488;
+  color: white;
+  border: 2px solid #0d9488;
+  border-bottom: 4px solid #0f766e;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.btn-wizard-pri:hover {
+  background: #0f766e;
+}
+
+.btn-wizard-pri:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+/* Success View */
+.exito-view {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.exito-icono {
+  width: 80px;
+  height: 80px;
+  background: #dcfce7;
+  color: #16a34a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  border: 2px solid #86efac;
+  border-bottom: 4px solid #4ade80;
+}
+
+.exito-titulo {
+  font-size: 24px;
+  font-weight: 900;
+  color: #1e293b;
+  margin-bottom: 12px;
+}
+
+.exito-texto {
+  color: #475569;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}

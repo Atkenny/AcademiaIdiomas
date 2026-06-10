@@ -5,18 +5,24 @@
 
 :root {
   /* Paleta de Colores: Tema Claro (Celeste y Blanco) */
-  --color-primario: #0284c7;          /* Celeste / Azul Cielo (Sky-600) - Alta legibilidad */
-  --color-primario-oscuro: #0369a1;   /* Celeste Oscuro (Sky-700) */
-  --color-secundario: #0284c7;        /* Celeste */
+  --color-primario: #0284c7;
+  /* Celeste / Azul Cielo (Sky-600) - Alta legibilidad */
+  --color-primario-oscuro: #0369a1;
+  /* Celeste Oscuro (Sky-700) */
+  --color-secundario: #0284c7;
+  /* Celeste */
   --color-secundario-oscuro: #0369a1;
-  
-  --color-fondo-pagina: #ffffff;      /* Integrado directamente sobre blanco */
+
+  --color-fondo-pagina: #ffffff;
+  /* Integrado directamente sobre blanco */
   --color-tarjeta: #ffffff;
   --color-texto: #475569;
   --color-texto-titulo: #0f172a;
   --color-borde-input: #cbd5e1;
-  --color-sombra: rgba(2, 132, 199, 0.05); /* Sombra celeste */
-  --color-resplandor: rgba(255, 255, 255, 0.12); /* Brillo del logo */
+  --color-sombra: rgba(2, 132, 199, 0.05);
+  /* Sombra celeste */
+  --color-resplandor: rgba(42, 6, 6, 0.12);
+  /* Brillo del logo */
 }
 
 /* 1. Estructura Principal del Split-Screen */
@@ -32,7 +38,7 @@
 
 /* 2. Panel Izquierdo (Marca en Degradado Celeste) */
 .login-lateral-marca {
-  flex: 1;
+  flex: 0.35;
   background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
   display: flex;
   flex-direction: column;
@@ -75,8 +81,15 @@
 }
 
 @keyframes flotar {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 /* Estilos para logos institucionales en PC */
@@ -140,7 +153,7 @@
 
 /* 3. Panel Derecho (Formulario de Login) */
 .login-lateral-formulario {
-  flex: 1;
+  flex: 0.65;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -153,10 +166,10 @@
 /* Contenedor del Formulario (Ampliado para mayor tamaño global) */
 .login-contenedor {
   width: 100%;
-  max-width: 420px; /* Ampliado a 420px para componentes más imponentes */
+  max-width: 400px;
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 24px;
 }
 
 /* 4. Encabezado del Formulario */
@@ -168,14 +181,15 @@
 }
 
 .login-titulo {
-  font-size: 32px; /* Título más grande */
+  font-size: 26px;
+  /* Título más compacto */
   font-weight: 800;
   color: var(--color-texto-titulo);
-  letter-spacing: -0.8px;
+  letter-spacing: -0.5px;
 }
 
 .login-titulo-secundario {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--color-primario);
   margin-top: -6px;
@@ -193,7 +207,7 @@
 .login-formulario {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
 }
 
 .login-grupo {
@@ -203,7 +217,8 @@
 }
 
 .login-label {
-  font-size: 15px; /* Etiqueta más grande */
+  font-size: 15px;
+  /* Etiqueta más grande */
   font-weight: 700;
   color: var(--color-texto);
   text-align: left;
@@ -221,7 +236,8 @@
 .login-input-wrapper svg.input-icono {
   position: absolute;
   left: 20px;
-  width: 24px; /* Iconos grandes */
+  width: 24px;
+  /* Iconos grandes */
   height: 24px;
   color: var(--color-texto);
   opacity: 0.55;
@@ -231,13 +247,13 @@
 
 .login-input {
   width: 100%;
-  height: 62px; /* Altura aumentada de 56px a 62px */
-  padding: 0 16px 0 58px; /* Espacio para el icono de 24px */
-  border-radius: 16px; /* Bordes más curvos y modernos */
+  height: 52px;
+  padding: 0 16px 0 52px;
+  border-radius: 14px;
   border: 2px solid var(--color-borde-input);
   background-color: var(--color-tarjeta);
   color: var(--color-texto-titulo);
-  font-size: 17px; /* Letra grande y legible */
+  font-size: 15px;
   transition: all 0.2s ease;
   outline: none;
 }
@@ -247,7 +263,7 @@
   box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15);
 }
 
-.login-input:focus + svg.input-icono {
+.login-input:focus+svg.input-icono {
   color: var(--color-primario);
   opacity: 1;
 }
@@ -273,7 +289,8 @@
 }
 
 .btn-ver-password svg {
-  width: 24px; /* Aumentado a 24px */
+  width: 24px;
+  /* Aumentado a 24px */
   height: 24px;
 }
 
@@ -282,7 +299,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 15px; /* Aumentado */
+  font-size: 15px;
+  /* Aumentado */
   margin-top: 4px;
 }
 
@@ -315,14 +333,14 @@
   text-decoration: underline;
 }
 
-/* 6. Botón de Acción Principal (62px) */
+/* 6. Botón de Acción Principal */
 .login-btn-enviar {
   background-color: var(--color-primario);
   color: #ffffff;
   border: none;
-  height: 62px; /* Altura aumentada de 56px a 62px */
-  border-radius: 16px;
-  font-size: 18px; /* Letra más grande */
+  height: 52px;
+  border-radius: 14px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   display: flex;
@@ -398,26 +416,9 @@
   flex-shrink: 0;
 }
 
-/* Crear Cuenta */
-.login-crear-cuenta {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  font-size: 15px;
-  margin-top: 20px;
-  color: var(--color-texto);
-}
-
-.login-link-registro {
-  color: var(--color-primario);
-  text-decoration: none;
-  font-weight: 700;
-  transition: color 0.2s ease;
-}
-
-.login-link-registro:hover {
-  color: var(--color-primario-oscuro);
-  text-decoration: underline;
+/* Crear Cuenta / Matrículas Móvil */
+.login-crear-cuenta-movil {
+  display: none !important;
 }
 
 /* Sección Beta Dinámica */
@@ -428,12 +429,13 @@
 
 .btn-beta-principal {
   width: 100%;
-  height: 62px; /* Mismo tamaño que inputs */
+  height: 52px;
+  /* Mismo tamaño que inputs */
   background: none;
   border: 2px solid var(--color-primario);
   color: var(--color-primario);
-  border-radius: 16px;
-  font-size: 16px;
+  border-radius: 14px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -454,8 +456,15 @@
 }
 
 @keyframes fadeInBeta {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .beta-opciones-titulo {
@@ -472,10 +481,10 @@
 
 .btn-beta-opcion {
   flex: 1;
-  height: 52px;
+  height: 48px;
   border: none;
   border-radius: 12px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -486,6 +495,7 @@
 .btn-beta-opcion.estudiante {
   background-color: #0284c7;
 }
+
 .btn-beta-opcion.estudiante:hover {
   background-color: #0369a1;
 }
@@ -493,6 +503,7 @@
 .btn-beta-opcion.docente {
   background-color: #0f172a;
 }
+
 .btn-beta-opcion.docente:hover {
   background-color: #1e293b;
 }
@@ -558,10 +569,16 @@
   .login-lateral-marca {
     display: none;
   }
+
   .login-lateral-formulario {
     flex: 1;
     padding: 32px 20px;
   }
+
+  .login-crear-cuenta-movil {
+    display: flex !important;
+  }
+
   .login-logos-movil {
     display: flex;
     justify-content: center;
@@ -573,6 +590,7 @@
     border-radius: 12px;
     border: 1px solid rgba(2, 132, 199, 0.1);
   }
+
   .login-logo-movil-img {
     height: 40px;
     width: auto;
@@ -582,11 +600,13 @@
     background: #ffffff;
     padding: 2px;
   }
+
   .login-selector-idioma {
     top: 16px;
     right: 16px;
     padding: 4px 10px;
   }
+
   .selector-select {
     font-size: 13.5px;
   }

@@ -81,6 +81,19 @@ export const traducciones = {
     analiticas: "Analíticas",
     comunicacion: "Comunicación",
 
+    // Docente – Crear Curso
+    crearCurso: "Crear Curso",
+    descripcionCurso: "Descripción del Curso",
+    infoHorario: "Información del Horario",
+    requisitos: "Requisitos",
+    cursoIncluye: "El curso incluye",
+    infoMatricula: "Información de Matrícula",
+    inicio: "Inicio",
+    horario: "Horario",
+    cupos: "Cupos",
+    cancelar: "Cancelar",
+    guardarCurso: "Guardar Curso",
+
     // Docente – Inicio
     bienvenidoDocente: "¡Bienvenido, Docente!",
     bienvenidaDocenteSub: "Gestiona tus grupos, publica contenido y haz seguimiento del progreso de tus estudiantes.",

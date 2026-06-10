@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useIdioma } from '../../contextos/IdiomaContexto';
+import { supabase } from '../../supabase/client';
+import ModalCrearCurso from './ModalCrearCurso';
 
 /**
  * InicioDocente — Dashboard principal del docente con métricas y accesos rápidos.
  */
 export default function InicioDocente({ usuario, alCambiarTab }) {
   const { t } = useIdioma();
+  const [modalCrearCursoAbierto, setModalCrearCursoAbierto] = useState(false);
 
   const metricas = [
     {
-      valor: '47',
+      valor: '0',
       label: t('totalAlumnos'),
       icono: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="22" height="22">
@@ -21,7 +24,7 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
       ),
     },
     {
-      valor: '3',
+      valor: '0',
       label: t('clasesActivas'),
       icono: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="22" height="22">
@@ -32,7 +35,7 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
       ),
     },
     {
-      valor: '12',
+      valor: '0',
       label: t('tareasPorCalificar'),
       icono: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="22" height="22">
@@ -44,7 +47,7 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
       ),
     },
     {
-      valor: 'Hoy 18:00',
+      valor: '--:--',
       label: t('proximaClase'),
       icono: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="22" height="22">
@@ -55,11 +58,32 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
     },
   ];
 
-  const gruposAsignados = [
-    { id: 1, nombre: 'Inglés Avanzado – C1', alumnos: 18, horario: 'Lun / Mier 18:00', codigo: 'ENG-C1', progreso: 72 },
-    { id: 2, nombre: 'Conversación de Negocios – B2', alumnos: 12, horario: 'Mar / Jue 19:30', codigo: 'ENG-BUS', progreso: 55 },
-    { id: 3, nombre: 'Francés Básico – A1', alumnos: 17, horario: 'Vie 17:00', codigo: 'FRA-A1', progreso: 40 },
-  ];
+  const [gruposAsignados, setGruposAsignados] = useState([]);
+
+  useEffect(() => {
+    const fetchCursos = async () => {
+      if (!usuario || !usuario.id) return;
+      const { data, error } = await supabase
+        .from('cursos')
+        .select('*')
+        .eq('docente_id', usuario.id);
+      
+      if (!error && data) {
+        // Formatear los datos para la tarjeta
+        const formateados = data.map(curso => ({
+          id: curso.id,
+          nombre: curso.nombre,
+          alumnos: curso.inscritos || 0,
+          cupos: curso.cupos_maximos || 0,
+          horario: `${curso.dias_semana ? curso.dias_semana.join('/') : ''} ${curso.hora_inicio || ''}`,
+          codigo: curso.nombre.substring(0, 3).toUpperCase() + '-' + curso.id.substring(0, 4).toUpperCase(),
+          progreso: 0 // Aún no implementamos progreso real
+        }));
+        setGruposAsignados(formateados);
+      }
+    };
+    fetchCursos();
+  }, [usuario]);
 
   const accesosRapidos = [
     {
@@ -120,7 +144,7 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
         borderRadius: '16px',
         border: '2px solid var(--color-borde, #e2e8f0)',
       }}
-        className="doc-banner-inst"
+        className="doc-banner-inst doc-banner-pc-only"
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <img src="/unan_logo.webp" alt="UNAN" style={{ height: '38px', objectFit: 'contain' }} />
@@ -133,7 +157,7 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
 
       <div className="doc-bienvenida-banner">
         <p className="doc-bienvenida-titulo">
-          {t('bienvenidoDocente')} 👋
+          {t('bienvenidoDocente')} {usuario?.nombres ? `${usuario.nombres} ${usuario.apellidos}` : ''} 👋
         </p>
         <p className="doc-bienvenida-sub">{t('bienvenidaDocenteSub')}</p>
       </div>
@@ -175,7 +199,7 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
 
       {/* Grupos asignados */}
       <div className="doc-seccion-card">
-        <div className="doc-seccion-header">
+        <div className="doc-seccion-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h3 className="doc-seccion-titulo">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="18" height="18">
               <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
@@ -185,10 +209,17 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
             </svg>
             {t('gruposAsignados')}
           </h3>
+          <button className="doc-btn-primario" onClick={() => setModalCrearCursoAbierto(true)} style={{ padding: '8px 16px', fontSize: '14px' }}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="16" height="16" style={{ marginRight: '6px', verticalAlign: 'middle', marginTop: '-2px' }}>
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            {t('crearCurso') || 'Crear Curso'}
+          </button>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          {gruposAsignados.map(grupo => (
+          {gruposAsignados.length > 0 ? gruposAsignados.map(grupo => (
             <div key={grupo.id} className="doc-clase-card">
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap' }}>
                 <div style={{ paddingLeft: '12px' }}>
@@ -236,9 +267,36 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
                 </div>
               </div>
             </div>
-          ))}
+          )) : (
+            <div style={{ padding: '32px', textAlign: 'center', color: '#64748b', fontSize: '15px' }}>
+              No tienes ningún curso asignado todavía. Puedes crear uno usando el botón superior.
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Modal Crear Curso */}
+      {modalCrearCursoAbierto && (
+        <ModalCrearCurso 
+          docenteId={usuario.id}
+          onClose={() => setModalCrearCursoAbierto(false)}
+          onCursoCreado={(nuevoCurso) => {
+            setModalCrearCursoAbierto(false);
+            // Formatear el nuevo curso para añadirlo a la tarjeta sin recargar la página
+            const formateado = {
+              id: nuevoCurso.id,
+              nombre: nuevoCurso.nombre,
+              alumnos: nuevoCurso.inscritos || 0,
+              cupos: nuevoCurso.cupos_maximos || 0,
+              horario: `${nuevoCurso.dias_semana ? nuevoCurso.dias_semana.join('/') : ''} ${nuevoCurso.hora_inicio || ''}`,
+              codigo: nuevoCurso.nombre.substring(0, 3).toUpperCase() + '-' + nuevoCurso.id.substring(0, 4).toUpperCase(),
+              progreso: 0
+            };
+            setGruposAsignados([...gruposAsignados, formateado]);
+          }}
+        />
+      )}
+
     </div>
   );
 }

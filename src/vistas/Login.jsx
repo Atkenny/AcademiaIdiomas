@@ -320,7 +320,7 @@ export default function Login({ alIniciarSesion }) {
           <video
             key={idioma} // Forzar recarga al cambiar idioma
             src={
-              idioma === 'en' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/NuevoIngles.mp4' :
+              idioma === 'en' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/Ingles.mp4' :
                 idioma === 'it' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/Italiano.mp4' :
                   idioma === 'pt' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/Portugues.mp4' : ''
             }

@@ -22,6 +22,10 @@ export const traducciones = {
     accesoConcedidoBeta: "Acceso concedido (Beta). Cargando portal de ",
     alertaCredenciales: "Credenciales de prueba inválidas. Revisa las cuentas beta de abajo.",
     alertaCompletar: "Por favor, completa todos los campos.",
+    eresNuevoEstudiante: "¿Eres nuevo estudiante?",
+    verCursosDisponibles: "Ver Cursos Disponibles",
+    eresDocente: "¿Eres docente?",
+    solicitarRegistro: "Solicitar Registro",
 
     // Tablero Estudiante
     portalEstudiante: "Portal Estudiante",
@@ -251,6 +255,10 @@ export const traducciones = {
     accesoConcedidoBeta: "Acceso concedido (Beta). Cargando portal de ",
     alertaCredenciales: "Credenciales de prueba inválidas. Revisa las cuentas beta de abajo.",
     alertaCompletar: "Por favor, completa todos los campos.",
+    eresNuevoEstudiante: "Você é um novo estudante?",
+    verCursosDisponibles: "Ver Cursos Disponíveis",
+    eresDocente: "Você é professor?",
+    solicitarRegistro: "Solicitar Registro",
 
     // Tablero Estudiante
     portalEstudiante: "Portal Estudiante",
@@ -466,6 +474,10 @@ export const traducciones = {
     accesoConcedidoBeta: "Access granted (Beta). Loading portal for ",
     alertaCredenciales: "Invalid test credentials. See beta accounts below.",
     alertaCompletar: "Please fill in all fields.",
+    eresNuevoEstudiante: "Are you a new student?",
+    verCursosDisponibles: "View Available Courses",
+    eresDocente: "Are you a teacher?",
+    solicitarRegistro: "Request Registration",
 
     portalEstudiante: "Student Portal",
     miProgreso: "My Progress",
@@ -673,6 +685,10 @@ export const traducciones = {
     accesoConcedidoBeta: "Accès accordé (Bêta). Chargement du portail de ",
     alertaCredenciales: "Identifiants de test invalides. Voir les comptes bêta ci-dessous.",
     alertaCompletar: "Veuillez remplir tous les champs.",
+    eresNuevoEstudiante: "Êtes-vous un nouvel étudiant ?",
+    verCursosDisponibles: "Voir les Cours Disponibles",
+    eresDocente: "Êtes-vous enseignant ?",
+    solicitarRegistro: "Demander une Inscription",
 
     portalEstudiante: "Portail Étudiant",
     miProgreso: "Mon Progrès",
@@ -1087,6 +1103,10 @@ export const traducciones = {
     accesoConcedidoBeta: "Accesso concesso (Beta). Caricamento del portale per ",
     alertaCredenciales: "Credenziali di prova non valide. Vedi i conti beta qui sotto.",
     alertaCompletar: "Si prega di completare tutti i campi.",
+    eresNuevoEstudiante: "Sei un nuovo studente?",
+    verCursosDisponibles: "Vedi Corsi Disponibili",
+    eresDocente: "Sei un docente?",
+    solicitarRegistro: "Richiedi Registrazione",
 
     portalEstudiante: "Portale Studente",
     miProgreso: "Il Mio Progresso",
@@ -1294,6 +1314,10 @@ export const traducciones = {
     accesoConcedidoBeta: "Доступ разрешен (Бета). Загрузка портала для ",
     alertaCredenciales: "Неверные тестовые учетные данные. См. бета-аккаунты ниже.",
     alertaCompletar: "Пожалуйста, заполните все поля.",
+    eresNuevoEstudiante: "Вы новый студент?",
+    verCursosDisponibles: "Посмотреть доступные курсы",
+    eresDocente: "Вы преподаватель?",
+    solicitarRegistro: "Запросить регистрацию",
 
     portalEstudiante: "Портал студента",
     miProgreso: "Мой прогресс",

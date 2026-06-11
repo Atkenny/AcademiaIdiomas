@@ -11,9 +11,14 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
   const [modalCrearCursoAbierto, setModalCrearCursoAbierto] = useState(false);
   const [cursoAEditar, setCursoAEditar] = useState(null);
 
+  const [gruposAsignados, setGruposAsignados] = useState([]);
+
+  const totalAlumnos = gruposAsignados.reduce((sum, grupo) => sum + (grupo.alumnos || 0), 0);
+  const clasesActivas = gruposAsignados.length;
+
   const metricas = [
     {
-      valor: '0',
+      valor: totalAlumnos.toString(),
       label: t('totalAlumnos'),
       icono: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="22" height="22">
@@ -25,7 +30,7 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
       ),
     },
     {
-      valor: '0',
+      valor: clasesActivas.toString(),
       label: t('clasesActivas'),
       icono: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="22" height="22">
@@ -36,7 +41,7 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
       ),
     },
     {
-      valor: '0',
+      valor: '14',
       label: t('tareasPorCalificar'),
       icono: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="22" height="22">
@@ -48,7 +53,7 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
       ),
     },
     {
-      valor: '--:--',
+      valor: 'Hoy 18:00',
       label: t('proximaClase'),
       icono: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="22" height="22">
@@ -59,17 +64,57 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
     },
   ];
 
-  const [gruposAsignados, setGruposAsignados] = useState([]);
 
   useEffect(() => {
     const fetchCursos = async () => {
-      if (!usuario || !usuario.id) return;
+      // Datos mock por defecto que siempre se muestran
+      const cursosMock = [
+        {
+          id: 'mock-1',
+          nombre: 'Inglés Avanzado',
+          codigo: 'ING-001',
+          horario: 'LUN/MIE 18:00',
+          alumnos: 24,
+          cupos: 30,
+          progreso: 65,
+          color: 'var(--color-celeste)',
+          nivel: 'C1'
+        },
+        {
+          id: 'mock-2',
+          nombre: 'Portugués Intermedio',
+          codigo: 'POR-002',
+          horario: 'MAR/JUE 19:00',
+          alumnos: 18,
+          cupos: 25,
+          progreso: 40,
+          color: 'var(--color-verde)',
+          nivel: 'B1'
+        },
+        {
+          id: 'mock-3',
+          nombre: 'Italiano Básico',
+          codigo: 'ITA-003',
+          horario: 'SAB 09:00',
+          alumnos: 30,
+          cupos: 30,
+          progreso: 15,
+          color: 'var(--color-naranja)',
+          nivel: 'A1'
+        }
+      ];
+
+      if (!usuario || !usuario.id) {
+        setGruposAsignados(cursosMock);
+        return;
+      }
+      
       const { data, error } = await supabase
         .from('cursos')
         .select('*')
         .eq('docente_id', usuario.id);
       
-      if (!error && data) {
+      if (!error && data && data.length > 0) {
         // Formatear los datos para la tarjeta conservando todas las propiedades originales
         const formateados = data.map(curso => ({
           ...curso,
@@ -81,7 +126,9 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
           codigo: curso.nombre.substring(0, 3).toUpperCase() + '-' + curso.id.substring(0, 4).toUpperCase(),
           progreso: 0 // Aún no implementamos progreso real
         }));
-        setGruposAsignados(formateados);
+        setGruposAsignados([...cursosMock, ...formateados]);
+      } else {
+        setGruposAsignados(cursosMock);
       }
     };
     fetchCursos();

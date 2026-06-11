@@ -55,19 +55,19 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
     },
     {
       id: 2,
-      nombre: 'Francés Intermedio',
-      nivel: 'B2',
-      profesor: 'Dra. Sophie Laurent',
+      nombre: 'Portugués Intermedio',
+      nivel: 'B1',
+      profesor: 'Prof. João Silva',
       progreso: 45,
-      color: 'var(--color-morado)',
+      color: 'var(--color-verde)',
       tab: 'biblioteca',
       bandera: (
         <svg viewBox="0 0 60 30" width="40" height="20" style={{ borderRadius: '4px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-          <clipPath id="f"><rect width="60" height="30" rx="4"/></clipPath>
-          <g clipPath="url(#f)">
-            <rect width="20" height="30" fill="#002395"/>
-            <rect x="20" width="20" height="30" fill="#fff"/>
-            <rect x="40" width="20" height="30" fill="#ed2939"/>
+          <clipPath id="pt"><rect width="60" height="30" rx="4"/></clipPath>
+          <g clipPath="url(#pt)">
+            <rect width="20" height="30" fill="#006600"/>
+            <rect x="20" width="40" height="30" fill="#ffcc00"/>
+            <circle cx="30" cy="15" r="8" fill="#003399"/>
           </g>
         </svg>
       )
@@ -87,43 +87,6 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
             <rect width="20" height="30" fill="#009246"/>
             <rect x="20" width="20" height="30" fill="#ffffff"/>
             <rect x="40" width="20" height="30" fill="#cd212a"/>
-          </g>
-        </svg>
-      )
-    },
-    {
-      id: 4,
-      nombre: 'Alemán Intermedio',
-      nivel: 'B1',
-      profesor: 'Prof. Dieter Schmidt',
-      progreso: 30,
-      color: '#475569',
-      tab: 'biblioteca',
-      bandera: (
-        <svg viewBox="0 0 60 30" width="40" height="20" style={{ borderRadius: '4px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-          <clipPath id="de"><rect width="60" height="30" rx="4"/></clipPath>
-          <g clipPath="url(#de)">
-            <rect width="60" height="10" fill="#000000"/>
-            <rect y="10" width="60" height="10" fill="#dd0000"/>
-            <rect y="20" width="60" height="10" fill="#ffce00"/>
-          </g>
-        </svg>
-      )
-    },
-    {
-      id: 5,
-      nombre: 'Japonés Básico',
-      nivel: 'A2',
-      profesor: 'Prof. Yuki Tanaka',
-      progreso: 60,
-      color: 'var(--color-rojo)',
-      tab: 'multimedia',
-      bandera: (
-        <svg viewBox="0 0 60 30" width="40" height="20" style={{ borderRadius: '4px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', border: '1px solid #e2e8f0' }}>
-          <clipPath id="jp"><rect width="60" height="30" rx="4"/></clipPath>
-          <g clipPath="url(#jp)">
-            <rect width="60" height="30" fill="#ffffff"/>
-            <circle cx="30" cy="15" r="9" fill="#bc002d"/>
           </g>
         </svg>
       )

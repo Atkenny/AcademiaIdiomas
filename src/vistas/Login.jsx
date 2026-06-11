@@ -308,7 +308,6 @@ export default function Login({ alIniciarSesion }) {
         <select value={idioma} onChange={(e) => cambiarIdioma(e.target.value)} className="selector-select" aria-label="Cambiar idioma / Change language">
           <option value="es">Español</option>
           <option value="en">English</option>
-          <option value="fr">Français</option>
           <option value="it">Italiano</option>
           <option value="pt">Português</option>
         </select>
@@ -607,7 +606,7 @@ export default function Login({ alIniciarSesion }) {
                 <div style={{ flex: 1, height: '1px', background: '#cbd5e1' }}></div>
               </div>
               <div style={{ textAlign: 'center', margin: '4px 0' }}>
-                <span style={{ fontWeight: '800', color: '#0f172a', fontSize: '15px' }}>¿Eres nuevo estudiante?</span>
+                <span style={{ fontWeight: '800', color: '#0f172a', fontSize: '15px' }}>{t('eresNuevoEstudiante')}</span>
               </div>
               <button
                 onClick={() => setVistaActual('catalogo')}
@@ -615,11 +614,11 @@ export default function Login({ alIniciarSesion }) {
                 onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(2px)'; e.currentTarget.style.borderBottomWidth = '2px'; }}
                 onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderBottomWidth = '4px'; }}
               >
-                Ver Cursos Disponibles
+                {t('verCursosDisponibles')}
               </button>
 
               <div style={{ textAlign: 'center', margin: '16px 0 4px 0' }}>
-                <span style={{ fontWeight: '800', color: '#0f172a', fontSize: '15px' }}>¿Eres docente?</span>
+                <span style={{ fontWeight: '800', color: '#0f172a', fontSize: '15px' }}>{t('eresDocente')}</span>
               </div>
               <button
                 onClick={() => setVistaActual('registroDocente')}
@@ -627,7 +626,7 @@ export default function Login({ alIniciarSesion }) {
                 onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(2px)'; e.currentTarget.style.borderBottomWidth = '2px'; }}
                 onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderBottomWidth = '4px'; }}
               >
-                Solicitar Registro
+                {t('solicitarRegistro')}
               </button>
             </div>
           )}

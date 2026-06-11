@@ -154,10 +154,9 @@ export default function TableroDocente({ usuario, alCerrarSesion }) {
             {!sidebarColapsado && <span className="docente-idioma-label">{t('idioma')}:</span>}
             <select value={idioma} onChange={e => cambiarIdioma(e.target.value)} className="docente-sidebar-idioma-select" aria-label="Cambiar idioma">
               <option value="es">{sidebarColapsado ? 'ES' : 'Español'}</option>
-              <option value="en">{sidebarColapsado ? 'EN' : 'Inglés'}</option>
-              <option value="pt">{sidebarColapsado ? 'PT' : 'Portugués'}</option>
+              <option value="en">{sidebarColapsado ? 'EN' : 'English'}</option>
               <option value="it">{sidebarColapsado ? 'IT' : 'Italiano'}</option>
-              <option value="fr">{sidebarColapsado ? 'FR' : 'Francés'}</option>
+              <option value="pt">{sidebarColapsado ? 'PT' : 'Português'}</option>
             </select>
           </div>
 
@@ -277,10 +276,9 @@ export default function TableroDocente({ usuario, alCerrarSesion }) {
                 <span className="docente-idioma-label">{t('idioma')}:</span>
                 <select value={idioma} onChange={e => cambiarIdioma(e.target.value)} className="docente-drawer-idioma-select" aria-label="Cambiar idioma">
                   <option value="es">Español</option>
-                  <option value="en">Inglés</option>
-                  <option value="pt">Portugués</option>
+                  <option value="en">English</option>
                   <option value="it">Italiano</option>
-                  <option value="fr">Francés</option>
+                  <option value="pt">Português</option>
                 </select>
               </div>
 

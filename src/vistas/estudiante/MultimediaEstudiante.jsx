@@ -23,6 +23,73 @@ export default function MultimediaEstudiante() {
   const [feedbackComprension, setFeedbackComprension] = useState(null);
   const [mostrarTranscripcion, setMostrarTranscripcion] = useState(false);
 
+  // Estados para Comprensión Lectora (Reading)
+  const lecturasDisponibles = [
+    {
+      titulo: 'The Future of Renewable Energy',
+      parrafos: [
+        'Renewable energy sources such as solar and wind power are becoming increasingly important as the world seeks to reduce its reliance on fossil fuels. In recent years, technological advancements have significantly lowered the cost of solar panels and wind turbines, making them more competitive with traditional energy sources.',
+        'However, one of the main challenges facing renewable energy is storage. Because the sun doesn\'t always shine and the wind doesn\'t always blow, developing efficient and high-capacity battery storage systems is crucial for ensuring a stable and reliable energy supply in the future.'
+      ],
+      pregunta: 'According to the text, what is the main challenge facing renewable energy?',
+      opciones: [
+        { id: 'A', text: 'The high cost of solar panels and wind turbines.' },
+        { id: 'B', text: 'Developing efficient battery storage systems.' },
+        { id: 'C', text: 'Finding new fossil fuel reserves.' }
+      ],
+      correcta: 'B',
+      msgExito: '¡Correcto! El texto afirma que "uno de los principales retos que enfrenta la energía renovable es el almacenamiento" (storage).',
+      msgError: 'Incorrecto. Vuelve a leer el segundo párrafo con atención, donde se menciona "one of the main challenges".'
+    },
+    {
+      titulo: 'The Impact of Artificial Intelligence',
+      parrafos: [
+        'Artificial Intelligence (AI) has rapidly transformed various sectors, from healthcare to finance. By processing vast amounts of data at unprecedented speeds, AI algorithms can identify patterns that human analysts might miss, leading to more accurate medical diagnoses and efficient market predictions.',
+        'Despite these benefits, ethical concerns regarding privacy and job displacement remain a significant topic of debate. Experts argue that while AI will automate repetitive tasks, it will also create new categories of jobs that require uniquely human skills like empathy and creative problem-solving.'
+      ],
+      pregunta: 'What is mentioned as a major ethical concern regarding AI?',
+      opciones: [
+        { id: 'A', text: 'Its inability to process large amounts of data.' },
+        { id: 'B', text: 'Privacy issues and potential job displacement.' },
+        { id: 'C', text: 'The lack of accuracy in medical diagnoses.' }
+      ],
+      correcta: 'B',
+      msgExito: '¡Correcto! El segundo párrafo señala explícitamente "ethical concerns regarding privacy and job displacement".',
+      msgError: 'Incorrecto. Revisa el inicio del segundo párrafo donde se mencionan las preocupaciones éticas.'
+    },
+    {
+      titulo: 'The Origins of Coffee',
+      parrafos: [
+        'The story of coffee begins in the Ethiopian plateau, where legend says a goat herder named Kaldi first discovered the potential of these beloved beans. He noticed that his goats became extremely energetic and didn\'t want to sleep at night after eating berries from a certain tree.',
+        'Knowledge of the energizing berries eventually spread to the Arabian Peninsula, and by the 16th century, coffee was being cultivated and traded in Persia, Egypt, Syria, and Turkey. It soon became a vital part of social and cultural life in these regions.'
+      ],
+      pregunta: 'How did Kaldi discover the effects of coffee?',
+      opciones: [
+        { id: 'A', text: 'By trading with merchants in the Arabian Peninsula.' },
+        { id: 'B', text: 'By studying ancient Ethiopian manuscripts.' },
+        { id: 'C', text: 'By observing his goats becoming energetic after eating the berries.' }
+      ],
+      correcta: 'C',
+      msgExito: '¡Excelente! La leyenda cuenta que lo descubrió al ver la reacción energética de sus cabras.',
+      msgError: 'Incorrecto. Busca en el primer párrafo la historia del pastor y sus animales.'
+    }
+  ];
+
+  const [lecturaActualIndex, setLecturaActualIndex] = useState(0);
+  const [respuestaLectura, setRespuestaLectura] = useState(null);
+  const [feedbackLectura, setFeedbackLectura] = useState(null);
+
+  const reiniciarLectura = () => {
+    let nuevoIndex;
+    do {
+      nuevoIndex = Math.floor(Math.random() * lecturasDisponibles.length);
+    } while (nuevoIndex === lecturaActualIndex && lecturasDisponibles.length > 1);
+    
+    setLecturaActualIndex(nuevoIndex);
+    setRespuestaLectura(null);
+    setFeedbackLectura(null);
+  };
+
   // Estados para Escritura (Writing)
   const palabrasScrambled = ['Learning', 'languages', 'is', 'opening', 'a', 'key', 'to', 'the', 'world'];
   const [palabrasSeleccionadas, setPalabrasSeleccionadas] = useState([]);
@@ -210,6 +277,17 @@ export default function MultimediaEstudiante() {
     }
   };
 
+  // Validar respuesta de comprensión lectora
+  const validarLectura = (opcion) => {
+    setRespuestaLectura(opcion);
+    const lecturaActual = lecturasDisponibles[lecturaActualIndex];
+    if (opcion === lecturaActual.correcta) {
+      setFeedbackLectura({ tipo: 'exito', mensaje: lecturaActual.msgExito });
+    } else {
+      setFeedbackLectura({ tipo: 'error', mensaje: lecturaActual.msgError });
+    }
+  };
+
   // Fichas de escritura
   const hacerClicPalabra = (palabra) => {
     if (palabrasSeleccionadas.includes(palabra)) return;
@@ -280,6 +358,16 @@ export default function MultimediaEstudiante() {
             <line x1="8" y1="23" x2="16" y2="23" />
           </svg>
           Speaking
+        </button>
+        <button 
+          className={`multimedia-tab-btn ${subTab === 'READING' ? 'activo' : ''}`}
+          onClick={() => setSubTab('READING')}
+        >
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2.5" fill="none">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+          </svg>
+          Reading
         </button>
         <button 
           className={`multimedia-tab-btn ${subTab === 'WRITING' ? 'activo' : ''}`}
@@ -677,6 +765,82 @@ export default function MultimediaEstudiante() {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {subTab === 'READING' && (
+        <div className="card-premium lab-pantalla">
+          <div className="lab-pantalla-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+            <div>
+              <h3 className="seccion-titulo">Comprensión Lectora (Reading)</h3>
+              <p className="seccion-subtitulo">Lee el siguiente artículo y responde las preguntas de comprensión para medir tu nivel.</p>
+            </div>
+            <button 
+              className="btn-limpiar-respuesta-3d" 
+              onClick={reiniciarLectura}
+              style={{ margin: 0 }}
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2.5" fill="none">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.3-9.57l-1.04 1" />
+              </svg>
+              Otra Lectura
+            </button>
+          </div>
+          
+          <div className="reading-container" style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '20px' }}>
+            <div className="reading-article" style={{ background: '#f8fafc', padding: '24px', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)' }}>
+              <h4 style={{ color: '#0f172a', marginBottom: '16px', fontSize: '20px', fontWeight: '800' }}>{lecturasDisponibles[lecturaActualIndex].titulo}</h4>
+              {lecturasDisponibles[lecturaActualIndex].parrafos.map((p, i) => (
+                <p key={i} style={{ color: '#334155', lineHeight: '1.7', fontSize: '16px', marginBottom: i === lecturasDisponibles[lecturaActualIndex].parrafos.length - 1 ? 0 : '16px' }}>
+                  {p}
+                </p>
+              ))}
+            </div>
+            
+            <div className="cuestionario-pregunta-card-premium">
+              <div className="pregunta-cabecera-row">
+                <span className="pregunta-badge-categoria">Reading B2</span>
+                <h4 className="pregunta-enunciado-premium">
+                  {lecturasDisponibles[lecturaActualIndex].pregunta}
+                </h4>
+              </div>
+              
+              <div className="pregunta-opciones-premium">
+                {lecturasDisponibles[lecturaActualIndex].opciones.map(op => {
+                  const seleccionada = respuestaLectura === op.id;
+                  const esCorrecta = op.id === lecturasDisponibles[lecturaActualIndex].correcta;
+                  return (
+                    <button 
+                      key={op.id}
+                      className={`opcion-btn-3d ${seleccionada ? 'seleccionada' : ''} ${respuestaLectura && esCorrecta ? 'correcto-reveal' : ''}`}
+                      onClick={() => validarLectura(op.id)}
+                      disabled={respuestaLectura !== null}
+                    >
+                      <span className="opcion-letra">{op.id}</span>
+                      <span className="opcion-texto">{op.text}</span>
+                      {seleccionada && (
+                        <span className="opcion-valida-icon">
+                          {esCorrecta ? '✓' : '✗'}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {feedbackLectura && (
+                <div className={`login-alerta-premium ${feedbackLectura.tipo} animate-fade-in`} style={{ marginTop: '20px' }}>
+                  <div className="alerta-icon-wrapper">
+                    {feedbackLectura.tipo === 'exito' ? '✓' : '⚠'}
+                  </div>
+                  <div className="alerta-cuerpo">
+                    <strong>{feedbackLectura.tipo === 'exito' ? '¡Respuesta correcta!' : 'Respuesta incorrecta'}</strong>
+                    <p>{feedbackLectura.mensaje}</p>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

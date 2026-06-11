@@ -4,9 +4,9 @@ import { traducciones } from '../utilidades/traducciones';
 const IdiomaContext = createContext();
 
 export function IdiomaProvider({ children }) {
-  // Inicializar idioma desde localStorage o usar 'es' por defecto
+  // Inicializar idioma desde localStorage o usar 'en' por defecto
   const [idioma, setIdioma] = useState(() => {
-    return localStorage.getItem('pwa_idioma') || 'es';
+    return localStorage.getItem('pwa_idioma') || 'en';
   });
 
   // Cambiar idioma y guardarlo en localStorage

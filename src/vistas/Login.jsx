@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../estilos/Login.css';
 import { useIdioma } from '../contextos/IdiomaContexto';
 import CatalogoCursos from './registro/CatalogoCursos';
@@ -26,7 +26,14 @@ export default function Login({ alIniciarSesion }) {
   const [alerta, setAlerta] = useState(null); // { tipo: 'exito' | 'error', mensaje: string }
   const [mostrarOpcionesBeta, setMostrarOpcionesBeta] = useState(false);
   const [datosDocenteRegistrado, setDatosDocenteRegistrado] = useState(null);
-  const [videoSilenciado, setVideoSilenciado] = useState(false);
+  const [videoSilenciado, setVideoSilenciado] = useState(true);
+  const [esMovil, setEsMovil] = useState(window.innerWidth <= 960);
+
+  useEffect(() => {
+    const verificarResolucion = () => setEsMovil(window.innerWidth <= 960);
+    window.addEventListener('resize', verificarResolucion);
+    return () => window.removeEventListener('resize', verificarResolucion);
+  }, []);
 
   const descargarCredencialesPDF = () => {
     if (!datosDocenteRegistrado) return;
@@ -310,7 +317,7 @@ export default function Login({ alIniciarSesion }) {
       {/* PANEL IZQUIERDO: Marca e Inspiración (Se oculta en móvil) */}
       <aside className="login-lateral-marca" style={{ position: 'relative', overflow: 'hidden', justifyContent: 'flex-start', paddingTop: (idioma === 'en' || idioma === 'it' || idioma === 'pt') ? '24px' : '64px' }}>
         {/* Video dinámico basado en el idioma */}
-        {(idioma === 'en' || idioma === 'it' || idioma === 'pt') && (
+        {!esMovil && (idioma === 'en' || idioma === 'it' || idioma === 'pt') && (
           <video
             key={idioma} // Forzar recarga al cambiar idioma
             src={

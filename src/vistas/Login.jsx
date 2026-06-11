@@ -26,6 +26,7 @@ export default function Login({ alIniciarSesion }) {
   const [alerta, setAlerta] = useState(null); // { tipo: 'exito' | 'error', mensaje: string }
   const [mostrarOpcionesBeta, setMostrarOpcionesBeta] = useState(false);
   const [datosDocenteRegistrado, setDatosDocenteRegistrado] = useState(null);
+  const [videoSilenciado, setVideoSilenciado] = useState(false);
 
   const descargarCredencialesPDF = () => {
     if (!datosDocenteRegistrado) return;
@@ -307,18 +308,110 @@ export default function Login({ alIniciarSesion }) {
       </div>
 
       {/* PANEL IZQUIERDO: Marca e Inspiración (Se oculta en móvil) */}
-      <aside className="login-lateral-marca">
-        <div className="marca-contenido">
-          {/* Logos Institucionales con Títulos en PC */}
-          <div className="login-institucional-pc">
-            <div className="institucional-logo-item">
-              <img src="/unan_logo.webp" alt="UNAN Managua" className="institucional-logo-img" />
-              <span className="institucional-logo-titulo">Universidad Nacional Autónoma de Nicaragua, Managua (UNAN-Managua)</span>
+      <aside className="login-lateral-marca" style={{ position: 'relative', overflow: 'hidden', justifyContent: 'flex-start', paddingTop: (idioma === 'en' || idioma === 'it' || idioma === 'pt') ? '24px' : '64px' }}>
+        {/* Video dinámico basado en el idioma */}
+        {(idioma === 'en' || idioma === 'it' || idioma === 'pt') && (
+          <video
+            key={idioma} // Forzar recarga al cambiar idioma
+            src={
+              idioma === 'en' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/Ingles.mp4' :
+              idioma === 'it' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/Italiano.mp4' :
+              idioma === 'pt' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/Portugues.mp4' : ''
+            }
+            autoPlay
+            muted={videoSilenciado}
+            loop
+            playsInline
+            preload="auto"
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              zIndex: 0, // Detrás del contenido
+              opacity: 0.8 // Ligera transparencia para que los logos se vean bien
+            }}
+          />
+        )}
+
+        {/* El botón de audio se movió adentro de marca-contenido */}
+        
+        {/* Capa oscura superpuesta para que el texto resalte sobre el video */}
+        {(idioma === 'en' || idioma === 'it' || idioma === 'pt') && (
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(15, 23, 42, 0.4)', // Azul oscuro translúcido
+            zIndex: 1
+          }}></div>
+        )}
+
+        <div className="marca-contenido" style={{ position: 'relative', zIndex: 2, width: '100%', padding: '0 32px' }}>
+          
+          {/* Header dinámico: Columna normal o Fila compacta con botón */}
+          <div className="login-institucional-pc" style={{ 
+            flexDirection: (idioma === 'en' || idioma === 'it' || idioma === 'pt') ? 'row' : 'column',
+            background: (idioma === 'en' || idioma === 'it' || idioma === 'pt') ? 'transparent' : 'rgba(255, 255, 255, 0.08)',
+            border: (idioma === 'en' || idioma === 'it' || idioma === 'pt') ? 'none' : '1.5px solid rgba(255, 255, 255, 0.15)',
+            padding: (idioma === 'en' || idioma === 'it' || idioma === 'pt') ? '0' : '20px',
+            margin: (idioma === 'en' || idioma === 'it' || idioma === 'pt') ? '16px auto 0 auto' : '0',
+            alignItems: 'center',
+            gap: '16px',
+            width: '100%',
+            justifyContent: (idioma === 'en' || idioma === 'it' || idioma === 'pt') ? 'center' : 'flex-start'
+          }}>
+            
+            <div className="institucional-logo-item" style={{ gap: '16px', margin: 0 }}>
+              <img src="/unan_logo.webp" alt="UNAN Managua" className="institucional-logo-img" style={{ width: 'auto', minWidth: '80px', borderRadius: '12px', padding: '4px 12px' }} />
+              {!(idioma === 'en' || idioma === 'it' || idioma === 'pt') && <span className="institucional-logo-titulo">Universidad Nacional Autónoma de Nicaragua, Managua (UNAN-Managua)</span>}
             </div>
-            <div className="institucional-logo-item">
-              <img src="/setec_logo.webp" alt="SETEC" className="institucional-logo-img" />
-              <span className="institucional-logo-titulo">Secretaría Técnica para Atención a las Universidades (SETEC)</span>
+            
+            <div className="institucional-logo-item" style={{ gap: '16px', margin: 0 }}>
+              <img src="/setec_logo.webp" alt="SETEC" className="institucional-logo-img" style={{ width: 'auto', minWidth: '80px', borderRadius: '12px', padding: '4px 12px' }} />
+              {!(idioma === 'en' || idioma === 'it' || idioma === 'pt') && <span className="institucional-logo-titulo">Secretaría Técnica para Atención a las Universidades (SETEC)</span>}
             </div>
+
+            {/* Botón para silenciar/desilenciar integrado en la misma fila */}
+            {(idioma === 'en' || idioma === 'it' || idioma === 'pt') && (
+              <button
+                onClick={() => setVideoSilenciado(!videoSilenciado)}
+                style={{
+                  background: 'rgba(15, 23, 42, 0.6)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  borderRadius: '12px',
+                  padding: '0 20px',
+                  height: '48px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white',
+                  cursor: 'pointer',
+                  backdropFilter: 'blur(4px)',
+                  transition: 'all 0.2s ease',
+                  marginLeft: '8px'
+                }}
+                title={videoSilenciado ? 'Escuchar audio' : 'Silenciar'}
+              >
+                {videoSilenciado ? (
+                  <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                    <line x1="23" y1="9" x2="17" y2="15" />
+                    <line x1="17" y1="9" x2="23" y2="15" />
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                  </svg>
+                )}
+              </button>
+            )}
+            
           </div>
         </div>
       </aside>
@@ -336,7 +429,7 @@ export default function Login({ alIniciarSesion }) {
           {/* Encabezado */}
           <header className="login-encabezado">
             <h1 className="login-titulo">{t('academia')}</h1>
-            <h2 className="login-titulo-secundario">{t('heroe')}</h2>
+            <h2 className="login-titulo-secundario">HEROE DE LA PAZ BRIAN WILSON</h2>
           </header>
 
           {/* Formulario de Login Único */}

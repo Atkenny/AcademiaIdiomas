@@ -73,7 +73,7 @@ const SelectorScrolleable = ({ opciones, valor, onChange, placeholder }) => {
   );
 };
 
-export default function ModalCrearCurso({ onClose, onCursoCreado, docenteId }) {
+export default function ModalCrearCurso({ onClose, onCursoCreado, docenteId, cursoAEditar = null }) {
   const { t } = useIdioma();
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState(null);
@@ -114,6 +114,57 @@ export default function ModalCrearCurso({ onClose, onCursoCreado, docenteId }) {
 
   const diasDeLaSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
+  // Cargar datos si estamos en modo edición
+  useEffect(() => {
+    if (cursoAEditar) {
+      setNombre(cursoAEditar.nombre || '');
+      setSede(cursoAEditar.sede || '');
+      setDescripcion(cursoAEditar.descripcion || '');
+      setCuposMaximos(cursoAEditar.cupos_maximos?.toString() || '');
+      
+      try {
+        if (cursoAEditar.requisitos) setRequisitos(JSON.parse(cursoAEditar.requisitos));
+        if (cursoAEditar.incluye) setIncluye(JSON.parse(cursoAEditar.incluye));
+      } catch (e) { console.error("Error parseando requisitos/incluye", e); }
+
+      // Fetch horarios antiguos
+      const fetchHorarios = async () => {
+        const { data, error } = await supabase.from('horarios_cursos').select('*').eq('curso_id', cursoAEditar.id);
+        if (!error && data && data.length > 0) {
+          const [yyyy, mm, dd] = data[0].fecha_inicio.split('-');
+          setAnioInicio(yyyy);
+          setMesInicio(mm);
+          setDiaInicio(parseInt(dd, 10).toString());
+
+          setDiasSeleccionados(data.map(d => d.dia_semana));
+
+          const parseTime = (timeStr) => {
+            let [h, m] = timeStr.split(':');
+            let hour = parseInt(h, 10);
+            let ampm = 'AM';
+            if (hour >= 12) {
+              ampm = 'PM';
+              if (hour > 12) hour -= 12;
+            }
+            if (hour === 0) hour = 12;
+            return { hour: hour.toString(), min: m, ampm };
+          };
+
+          const inicio = parseTime(data[0].hora_inicio);
+          setHInicioHora(inicio.hour);
+          setHInicioMinuto(inicio.min);
+          setHInicioAmPm(inicio.ampm);
+
+          const fin = parseTime(data[0].hora_fin);
+          setHFinHora(fin.hour);
+          setHFinMinuto(fin.min);
+          setHFinAmPm(fin.ampm);
+        }
+      };
+      fetchHorarios();
+    }
+  }, [cursoAEditar]);
+
   // Manejo de Días
   const toggleDia = (dia) => {
     if (diasSeleccionados.includes(dia)) {
@@ -149,7 +200,23 @@ export default function ModalCrearCurso({ onClose, onCursoCreado, docenteId }) {
   };
 
   const manejarSubmit = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
+
+    // Si hay texto pendiente en los inputs, lo agregamos antes de guardar
+    let reqFinales = requisitos;
+    if (requisitoInput.trim() !== '') {
+      reqFinales = [...requisitos, requisitoInput.trim()];
+      setRequisitos(reqFinales);
+      setRequisitoInput('');
+    }
+
+    let incFinales = incluye;
+    if (incluyeInput.trim() !== '') {
+      incFinales = [...incluye, incluyeInput.trim()];
+      setIncluye(incFinales);
+      setIncluyeInput('');
+    }
+
     if (!nombre || !descripcion || !sede || !diaInicio || !mesInicio || !anioInicio || diasSeleccionados.length === 0 || !hInicioHora || !hFinHora || !cuposMaximos) {
       setError('Por favor, completa todos los campos principales (Nombre, Descripción, Sede, Fecha, Días, Horario y Cupos).');
       return;
@@ -172,27 +239,52 @@ export default function ModalCrearCurso({ onClose, onCursoCreado, docenteId }) {
     setError(null);
 
     try {
-      // 1. Insertar el curso en la tabla 'cursos'
-      const { data: cursoData, error: cursoError } = await supabase.from('cursos').insert([{
-        docente_id: docenteId,
-        nombre: nombre,
-        descripcion: descripcion,
-        idioma: 'Español',
-        nivel: 'Básico',
-        sede: sede,
-        requisitos: JSON.stringify(requisitos),
-        incluye: JSON.stringify(incluye),
-        cupos_maximos: parseInt(cuposMaximos, 10),
-        estado: 'publicado'
-      }]).select();
+      let cursoGuardadoId = null;
+      let cursoGuardadoData = null;
 
-      if (cursoError) throw cursoError;
+      if (cursoAEditar) {
+        // UPDATE
+        const { data: cursoData, error: cursoError } = await supabase.from('cursos').update({
+          nombre: nombre,
+          descripcion: descripcion,
+          sede: sede,
+          requisitos: JSON.stringify(reqFinales),
+          incluye: JSON.stringify(incFinales),
+          cupos_maximos: parseInt(cuposMaximos, 10)
+        }).eq('id', cursoAEditar.id).select();
 
-      const cursoId = cursoData[0].id;
+        if (cursoError) throw cursoError;
+        
+        cursoGuardadoId = cursoAEditar.id;
+        cursoGuardadoData = cursoData[0];
+
+        // Borrar horarios antiguos antes de insertar los nuevos
+        await supabase.from('horarios_cursos').delete().eq('curso_id', cursoAEditar.id);
+        
+      } else {
+        // INSERT
+        const { data: cursoData, error: cursoError } = await supabase.from('cursos').insert([{
+          docente_id: docenteId,
+          nombre: nombre,
+          descripcion: descripcion,
+          idioma: 'Español',
+          nivel: 'Básico',
+          sede: sede,
+          requisitos: JSON.stringify(reqFinales),
+          incluye: JSON.stringify(incFinales),
+          cupos_maximos: parseInt(cuposMaximos, 10),
+          estado: 'publicado'
+        }]).select();
+
+        if (cursoError) throw cursoError;
+
+        cursoGuardadoId = cursoData[0].id;
+        cursoGuardadoData = cursoData[0];
+      }
 
       // 2. Insertar los horarios en 'horarios_cursos'
       const horarios = diasSeleccionados.map(dia => ({
-        curso_id: cursoId,
+        curso_id: cursoGuardadoId,
         fecha_inicio: fechaFormat,
         dia_semana: dia,
         hora_inicio: horaInicioDb,
@@ -203,10 +295,10 @@ export default function ModalCrearCurso({ onClose, onCursoCreado, docenteId }) {
 
       if (scheduleError) {
         console.error("Error al guardar horarios:", scheduleError);
-        throw new Error("El curso se creó, pero falló al guardar los horarios.");
+        throw new Error("El curso se guardó, pero falló al guardar los horarios.");
       }
 
-      onCursoCreado(cursoData[0]);
+      onCursoCreado(cursoGuardadoData);
     } catch (err) {
       console.error(err);
       setError('Ocurrió un error al guardar el curso: ' + err.message);
@@ -286,7 +378,10 @@ export default function ModalCrearCurso({ onClose, onCursoCreado, docenteId }) {
     <div className="doc-modal-overlay" onClick={onClose}>
       <div className="doc-modal-contenido" onClick={e => e.stopPropagation()} style={{ maxWidth: '800px', width: '95%' }}>
         <div className="doc-modal-header">
-          <h2>{t('crearCurso') || 'Crear Curso'}</h2>
+          <h2 className="doc-modal-titulo">{cursoAEditar ? 'Editar Curso' : 'Crear Nuevo Curso'}</h2>
+          <p className="doc-modal-sub">
+            {cursoAEditar ? 'Modifica los detalles o el horario de tu curso.' : 'Configura tu nueva clase en 3 simples pasos.'}
+          </p>
           <button className="doc-btn-cerrar-modal" onClick={onClose}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="20" height="20">
               <line x1="18" y1="6" x2="6" y2="18" />
@@ -295,7 +390,16 @@ export default function ModalCrearCurso({ onClose, onCursoCreado, docenteId }) {
           </button>
         </div>
         
-        <form onSubmit={manejarSubmit} style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
+        <div 
+          className="doc-form-wrapper"
+          style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}
+          onKeyDown={(e) => { 
+            // Prevenir que la tecla Enter envíe o cambie de paso accidentalmente
+            if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+              e.preventDefault();
+            }
+          }}
+        >
           <div className="doc-modal-body" style={{ flex: 1, overflowY: 'auto' }}>
             
             {/* Indicador de Pasos */}
@@ -566,12 +670,12 @@ export default function ModalCrearCurso({ onClose, onCursoCreado, docenteId }) {
             {paso < 3 ? (
               <button type="button" className="doc-btn-primario" onClick={avanzarPaso}>Siguiente</button>
             ) : (
-              <button type="submit" className="doc-btn-primario" disabled={cargando}>
-                {cargando ? 'Guardando...' : 'Guardar Curso'}
+              <button type="button" className="doc-btn-primario" onClick={manejarSubmit} disabled={cargando}>
+                {cargando ? 'Guardando...' : (cursoAEditar ? 'Actualizar Curso' : 'Guardar Curso')}
               </button>
             )}
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ import ModalCrearCurso from './ModalCrearCurso';
 export default function InicioDocente({ usuario, alCambiarTab }) {
   const { t } = useIdioma();
   const [modalCrearCursoAbierto, setModalCrearCursoAbierto] = useState(false);
+  const [cursoAEditar, setCursoAEditar] = useState(null);
 
   const metricas = [
     {
@@ -69,8 +70,9 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
         .eq('docente_id', usuario.id);
       
       if (!error && data) {
-        // Formatear los datos para la tarjeta
+        // Formatear los datos para la tarjeta conservando todas las propiedades originales
         const formateados = data.map(curso => ({
+          ...curso,
           id: curso.id,
           nombre: curso.nombre,
           alumnos: curso.inscritos || 0,
@@ -84,6 +86,22 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
     };
     fetchCursos();
   }, [usuario]);
+
+  const eliminarCurso = async (id) => {
+    if (window.confirm("¿Estás seguro de que deseas eliminar este curso? Esta acción no se puede deshacer y borrará también los horarios asociados.")) {
+      const { error } = await supabase.from('cursos').delete().eq('id', id);
+      if (error) {
+        alert("Ocurrió un error al eliminar el curso: " + error.message);
+      } else {
+        setGruposAsignados(gruposAsignados.filter(c => c.id !== id));
+      }
+    }
+  };
+
+  const abrirEdicion = (curso) => {
+    setCursoAEditar(curso);
+    setModalCrearCursoAbierto(true);
+  };
 
   const accesosRapidos = [
     {
@@ -247,13 +265,39 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
                   </div>
                 </div>
 
-                <button
-                  className="doc-btn-primario"
-                  onClick={() => alCambiarTab('contenido')}
-                  style={{ fontSize: '13px', padding: '8px 14px' }}
-                >
-                  {t('administrarAula')}
-                </button>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <button
+                    className="doc-btn-secundario"
+                    onClick={() => abrirEdicion(grupo)}
+                    style={{ fontSize: '13px', padding: '8px 14px' }}
+                    title="Editar Curso"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="16" height="16">
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                    </svg>
+                  </button>
+                  <button
+                    className="doc-btn-peligro"
+                    onClick={() => eliminarCurso(grupo.id)}
+                    style={{ fontSize: '13px', padding: '8px 14px' }}
+                    title="Eliminar Curso"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="16" height="16">
+                      <polyline points="3 6 5 6 21 6" />
+                      <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                      <path d="M10 11v6" />
+                      <path d="M14 11v6" />
+                    </svg>
+                  </button>
+                  <button
+                    className="doc-btn-primario"
+                    onClick={() => alCambiarTab('contenido')}
+                    style={{ fontSize: '13px', padding: '8px 14px' }}
+                  >
+                    {t('administrarAula')}
+                  </button>
+                </div>
               </div>
 
               {/* Barra de progreso */}
@@ -275,15 +319,20 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
         </div>
       </div>
 
-      {/* Modal Crear Curso */}
+      {/* Modal Crear/Editar Curso */}
       {modalCrearCursoAbierto && (
         <ModalCrearCurso 
           docenteId={usuario.id}
-          onClose={() => setModalCrearCursoAbierto(false)}
+          cursoAEditar={cursoAEditar}
+          onClose={() => {
+            setModalCrearCursoAbierto(false);
+            setCursoAEditar(null);
+          }}
           onCursoCreado={(nuevoCurso) => {
             setModalCrearCursoAbierto(false);
-            // Formatear el nuevo curso para añadirlo a la tarjeta sin recargar la página
+            // Formatear el nuevo curso para añadirlo o actualizarlo en la tarjeta
             const formateado = {
+              ...nuevoCurso,
               id: nuevoCurso.id,
               nombre: nuevoCurso.nombre,
               alumnos: nuevoCurso.inscritos || 0,
@@ -292,7 +341,15 @@ export default function InicioDocente({ usuario, alCambiarTab }) {
               codigo: nuevoCurso.nombre.substring(0, 3).toUpperCase() + '-' + nuevoCurso.id.substring(0, 4).toUpperCase(),
               progreso: 0
             };
-            setGruposAsignados([...gruposAsignados, formateado]);
+            
+            if (cursoAEditar) {
+              // Si fue edición, actualizar en la lista actual
+              setGruposAsignados(gruposAsignados.map(c => c.id === nuevoCurso.id ? { ...c, ...formateado } : c));
+            } else {
+              // Si fue creación, agregarlo al final
+              setGruposAsignados([...gruposAsignados, formateado]);
+            }
+            setCursoAEditar(null);
           }}
         />
       )}

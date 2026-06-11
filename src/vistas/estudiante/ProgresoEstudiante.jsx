@@ -10,6 +10,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
   // Estados para el carrusel de cursos
   const [currentIndex, setCurrentIndex] = useState(0);
   const [esMovil, setEsMovil] = useState(false);
+  const [videoSilenciado, setVideoSilenciado] = useState(false);
   const containerRef = useRef(null);
 
   // Estados para la vista completa "Ver Todo"
@@ -729,12 +730,75 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
         </div>
       )}
 
-      {/* Encabezado Principal */}
-      <div className="vista-header" style={{ marginBottom: '28px', textAlign: 'left' }}>
-        <h2 className="vista-titulo" style={{ fontSize: '34px', color: '#1e293b', fontWeight: '800', marginBottom: '8px' }}>{t('panelInicio')}</h2>
-        <p className="vista-descripcion" style={{ fontSize: '18px', color: '#64748b', margin: 0 }}>
-          {t('bienvenido')}, <strong>{nombreUsuario}</strong>. {t('bienvenidaSub')}
-        </p>
+      {/* Encabezado Principal con Video Dinámico */}
+      <div className="vista-header" style={{ position: 'relative', marginBottom: '28px', textAlign: 'left', padding: esMovil ? '24px 16px' : '40px 32px', borderRadius: '16px', overflow: 'hidden', backgroundColor: (idioma === 'en' || idioma === 'it' || idioma === 'pt') ? '#010001' : 'transparent' }}>
+        {/* Video dinámico de fondo */}
+        {(idioma === 'en' || idioma === 'it' || idioma === 'pt') && (
+          <video
+            key={idioma}
+            src={
+              idioma === 'en' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/Ingles.mp4' :
+              idioma === 'it' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/Italiano.mp4' :
+              idioma === 'pt' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/Portugues.mp4' : ''
+            }
+            autoPlay
+            muted={videoSilenciado}
+            loop
+            playsInline
+            preload="auto"
+            style={{ position: 'absolute', top: 0, right: 0, left: esMovil ? 'auto' : 0, width: esMovil ? '65%' : '100%', height: '100%', objectFit: 'contain', objectPosition: 'right center', zIndex: 0 }}
+          />
+        )}
+        
+        {/* Overlay oscuro en gradiente: oscuro a la izquierda para el texto, transparente a la derecha para el video */}
+        {(idioma === 'en' || idioma === 'it' || idioma === 'pt') && (
+          <>
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: esMovil ? 'linear-gradient(to right, #010001 0%, #010001 40%, transparent 60%)' : 'linear-gradient(to right, #010001 0%, rgba(1,0,1,0.8) 40%, transparent 80%)', zIndex: 1 }}></div>
+            {/* Botón de Audio */}
+            <button
+              onClick={() => setVideoSilenciado(!videoSilenciado)}
+              style={{
+                position: 'absolute',
+                bottom: '24px',
+                right: '24px',
+                zIndex: 10,
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                color: 'white',
+                border: '1px solid rgba(255,255,255,0.3)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
+              }}
+              aria-label={videoSilenciado ? "Activar sonido" : "Silenciar video"}
+            >
+              {videoSilenciado ? (
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                  <line x1="23" y1="9" x2="17" y2="15"></line>
+                  <line x1="17" y1="9" x2="23" y2="15"></line>
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+              )}
+            </button>
+          </>
+        )}
+
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: esMovil ? '55%' : '100%' }}>
+          <h2 className="vista-titulo" style={{ fontSize: esMovil ? '20px' : '34px', color: (idioma === 'en' || idioma === 'it' || idioma === 'pt') ? '#ffffff' : '#1e293b', fontWeight: '800', marginBottom: esMovil ? '6px' : '8px', textShadow: (idioma === 'en' || idioma === 'it' || idioma === 'pt') ? '0 2px 4px rgba(0,0,0,0.5)' : 'none', lineHeight: '1.2' }}>{t('panelInicio')}</h2>
+          <p className="vista-descripcion" style={{ fontSize: esMovil ? '12.5px' : '18px', color: (idioma === 'en' || idioma === 'it' || idioma === 'pt') ? '#e2e8f0' : '#64748b', margin: 0, textShadow: (idioma === 'en' || idioma === 'it' || idioma === 'pt') ? '0 1px 2px rgba(0,0,0,0.5)' : 'none', lineHeight: esMovil ? '1.4' : 'normal' }}>
+            {t('bienvenido')}, <strong>{nombreUsuario}</strong>.<br />
+            {t('bienvenidaSub')}
+          </p>
+        </div>
       </div>
 
       {/* Grid del Dashboard Simplificado (Fila de Cursos + Feed de Novedades) */}

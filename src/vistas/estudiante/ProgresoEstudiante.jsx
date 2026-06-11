@@ -6,7 +6,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
   const nombreUsuario = usuario.email.split('@')[0];
   const [descargaMensaje, setDescargaMensaje] = useState('');
   const [recursoVisualizar, setRecursoVisualizar] = useState(null);
-  
+
   // Estados para el carrusel de cursos
   const [currentIndex, setCurrentIndex] = useState(0);
   const [esMovil, setEsMovil] = useState(false);
@@ -42,13 +42,13 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
       tab: 'multimedia',
       bandera: (
         <svg viewBox="0 0 60 30" width="40" height="20" style={{ borderRadius: '4px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-          <clipPath id="t"><rect width="60" height="30" rx="4"/></clipPath>
+          <clipPath id="t"><rect width="60" height="30" rx="4" /></clipPath>
           <g clipPath="url(#t)">
-            <rect width="60" height="30" fill="#00247d"/>
-            <path d="M0 0 L60 30 M60 0 L0 30" stroke="#fff" strokeWidth="6"/>
-            <path d="M0 0 L60 30 M60 0 L0 30" stroke="#cf142b" strokeWidth="4"/>
-            <path d="M30 0 v30 M0 15 h60" stroke="#fff" strokeWidth="10"/>
-            <path d="M30 0 v30 M0 15 h60" stroke="#cf142b" strokeWidth="6"/>
+            <rect width="60" height="30" fill="#00247d" />
+            <path d="M0 0 L60 30 M60 0 L0 30" stroke="#fff" strokeWidth="6" />
+            <path d="M0 0 L60 30 M60 0 L0 30" stroke="#cf142b" strokeWidth="4" />
+            <path d="M30 0 v30 M0 15 h60" stroke="#fff" strokeWidth="10" />
+            <path d="M30 0 v30 M0 15 h60" stroke="#cf142b" strokeWidth="6" />
           </g>
         </svg>
       )
@@ -63,11 +63,11 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
       tab: 'biblioteca',
       bandera: (
         <svg viewBox="0 0 60 30" width="40" height="20" style={{ borderRadius: '4px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-          <clipPath id="pt"><rect width="60" height="30" rx="4"/></clipPath>
+          <clipPath id="pt"><rect width="60" height="30" rx="4" /></clipPath>
           <g clipPath="url(#pt)">
-            <rect width="20" height="30" fill="#006600"/>
-            <rect x="20" width="40" height="30" fill="#ffcc00"/>
-            <circle cx="30" cy="15" r="8" fill="#003399"/>
+            <rect width="20" height="30" fill="#006600" />
+            <rect x="20" width="40" height="30" fill="#ffcc00" />
+            <circle cx="30" cy="15" r="8" fill="#003399" />
           </g>
         </svg>
       )
@@ -82,11 +82,11 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
       tab: 'biblioteca',
       bandera: (
         <svg viewBox="0 0 60 30" width="40" height="20" style={{ borderRadius: '4px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-          <clipPath id="it"><rect width="60" height="30" rx="4"/></clipPath>
+          <clipPath id="it"><rect width="60" height="30" rx="4" /></clipPath>
           <g clipPath="url(#it)">
-            <rect width="20" height="30" fill="#009246"/>
-            <rect x="20" width="20" height="30" fill="#ffffff"/>
-            <rect x="40" width="20" height="30" fill="#cd212a"/>
+            <rect width="20" height="30" fill="#009246" />
+            <rect x="20" width="20" height="30" fill="#ffffff" />
+            <rect x="40" width="20" height="30" fill="#cd212a" />
           </g>
         </svg>
       )
@@ -166,9 +166,9 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
 
   // Filtrado de cursos para la vista completa
   const cursosFiltrados = cursos.filter(curso => {
-    const coincideBusqueda = curso.nombre.toLowerCase().includes(busqueda.toLowerCase()) || 
-                             curso.nivel.toLowerCase().includes(busqueda.toLowerCase()) || 
-                             curso.profesor.toLowerCase().includes(busqueda.toLowerCase());
+    const coincideBusqueda = curso.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+      curso.nivel.toLowerCase().includes(busqueda.toLowerCase()) ||
+      curso.profesor.toLowerCase().includes(busqueda.toLowerCase());
     const coincideFavorito = !filtroFavoritos || favoritos.includes(curso.id);
     return coincideBusqueda && coincideFavorito;
   });
@@ -212,8 +212,8 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                 <span className="anuncio-autor" style={{ fontSize: '17px', fontWeight: '800' }}>{anuncio.profesor}</span>
                 <span className="anuncio-fecha" style={{ fontSize: '14px', color: '#94a3b8' }}>{anuncio.fecha}</span>
               </div>
-              <span className="anuncio-tag-curso" style={{ 
-                color: anuncio.tagColor, 
+              <span className="anuncio-tag-curso" style={{
+                color: anuncio.tagColor,
                 backgroundColor: anuncio.tagBg,
                 fontSize: '13.5px',
                 fontWeight: '800',
@@ -231,14 +231,14 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
             {anuncio.adjuntos.length > 0 && (
               <div className="anuncio-adjuntos" style={{ paddingTop: '22px' }}>
                 {anuncio.adjuntos.map((adj, index) => (
-                  <button 
+                  <button
                     key={index}
                     className="adjunto-chip"
                     onClick={() => abrirRecurso(adj.nombre)}
-                    style={{ 
-                      background: 'none', 
-                      fontInherit: 'inherit', 
-                      border: '1.5px solid var(--borde-color)', 
+                    style={{
+                      background: 'none',
+                      fontInherit: 'inherit',
+                      border: '1.5px solid var(--borde-color)',
                       cursor: 'pointer',
                       padding: '10px 18px',
                       fontSize: '14.5px',
@@ -298,14 +298,14 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
 
         {/* Encabezado con Botón de Regreso */}
         <div className="vista-header" style={{ marginBottom: '32px', textAlign: 'left' }}>
-          <button 
-            onClick={() => setVerTodosLosCursos(false)} 
-            className="btn-manual-accion secundario" 
-            style={{ 
-              width: 'max-content', 
-              padding: '0 16px', 
-              height: '38px', 
-              fontSize: '14px', 
+          <button
+            onClick={() => setVerTodosLosCursos(false)}
+            className="btn-manual-accion secundario"
+            style={{
+              width: 'max-content',
+              padding: '0 16px',
+              height: '38px',
+              fontSize: '14px',
               marginBottom: '16px',
               textTransform: 'none',
               fontWeight: '800'
@@ -313,7 +313,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
           >
             {t('volverInicio')}
           </button>
-          
+
           <h2 className="vista-titulo" style={{ fontSize: '34px', color: '#1e293b', fontWeight: '800', marginBottom: '8px' }}>
             {t('misCursosAcademicos')}
           </h2>
@@ -323,12 +323,12 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
         </div>
 
         {/* Barra de Filtros, Búsqueda y Tipos de Vista */}
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center', 
-          gap: '16px', 
-          flexWrap: 'wrap', 
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: '16px',
+          flexWrap: 'wrap',
           marginBottom: '28px',
           backgroundColor: '#ffffff',
           padding: '16px 20px',
@@ -337,9 +337,9 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
         }}>
           {/* Buscador */}
           <div className="biblioteca-buscar" style={{ flex: '1', minWidth: '260px', margin: 0 }}>
-            <input 
-              type="text" 
-              className="buscar-input" 
+            <input
+              type="text"
+              className="buscar-input"
               placeholder={t('buscarCurso')}
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
@@ -353,10 +353,10 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
 
           {/* Filtros rápidos y Selección de Vista */}
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
-            
+
             {/* Toggle Favoritos */}
-            <button 
-              onClick={() => setFiltroFavoritos(!filtroFavoritos)} 
+            <button
+              onClick={() => setFiltroFavoritos(!filtroFavoritos)}
               className={`btn-filtro ${filtroFavoritos ? 'activo' : ''}`}
               style={{ height: '44px', display: 'flex', alignItems: 'center', gap: '8px', padding: '0 16px', margin: 0 }}
             >
@@ -369,8 +369,8 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
             {/* Selectores de Layout */}
             <div className="toggles-layout">
               {/* Vista Tarjeta (Card) */}
-              <button 
-                onClick={() => setVistaTipo('card')} 
+              <button
+                onClick={() => setVistaTipo('card')}
                 className={`btn-toggle-layout ${vistaTipo === 'card' ? 'activo' : ''}`}
                 title="Vista Tarjeta"
               >
@@ -383,8 +383,8 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
               </button>
 
               {/* Vista Cuadrícula (Grid) */}
-              <button 
-                onClick={() => setVistaTipo('grid')} 
+              <button
+                onClick={() => setVistaTipo('grid')}
                 className={`btn-toggle-layout ${vistaTipo === 'grid' ? 'activo' : ''}`}
                 title="Vista Cuadrícula"
               >
@@ -397,8 +397,8 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
               </button>
 
               {/* Vista Lista (List) */}
-              <button 
-                onClick={() => setVistaTipo('list')} 
+              <button
+                onClick={() => setVistaTipo('list')}
                 className={`btn-toggle-layout ${vistaTipo === 'list' ? 'activo' : ''}`}
                 title="Vista Lista"
               >
@@ -412,13 +412,13 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                 </svg>
               </button>
             </div>
-            
+
           </div>
         </div>
 
         {/* Listado de Cursos según la Vista Seleccionada */}
         <div style={{ marginBottom: '40px' }}>
-          
+
           {cursosFiltrados.length === 0 ? (
             <div className="card-premium" style={{ textAlign: 'center', padding: '48px', color: '#64748b' }}>
               <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" strokeWidth="2" fill="none" style={{ margin: '0 auto 16px auto', display: 'block', opacity: 0.6 }}>
@@ -430,30 +430,30 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
               <p style={{ fontSize: '15px', margin: 0 }}>{t('noCursosSub')}</p>
             </div>
           ) : (
-            
+
             // 1. RENDER VISTA TARJETA (CARD)
             vistaTipo === 'card' ? (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '28px' }}>
                 {cursosFiltrados.map(curso => (
-                  <div 
-                    key={curso.id} 
-                    className="card-premium" 
-                    style={{ 
+                  <div
+                    key={curso.id}
+                    className="card-premium"
+                    style={{
                       boxSizing: 'border-box',
-                      borderTop: `6px solid ${curso.color}`, 
-                      display: 'flex', 
-                      flexDirection: 'column', 
+                      borderTop: `6px solid ${curso.color}`,
+                      display: 'flex',
+                      flexDirection: 'column',
                       justifyContent: 'space-between',
-                      gap: '24px', 
-                      padding: '32px', 
+                      gap: '24px',
+                      padding: '32px',
                       margin: 0,
                       position: 'relative'
                     }}
                   >
                     {/* Botón Favorito en Esquina */}
-                    <button 
-                      onClick={() => toggleFavorito(curso.id)} 
-                      className="btn-favorito" 
+                    <button
+                      onClick={() => toggleFavorito(curso.id)}
+                      className="btn-favorito"
                       style={{ position: 'absolute', top: '16px', right: '16px' }}
                       title={favoritos.includes(curso.id) ? t('quitarFavorito') : t('marcarFavorito')}
                     >
@@ -465,14 +465,14 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                     <div style={{ display: 'flex', gap: '18px', alignItems: 'center' }}>
                       {curso.bandera}
                       <div style={{ textAlign: 'left' }}>
-                        <span style={{ 
-                          fontSize: '13px', 
-                          fontWeight: '800', 
-                          color: curso.color, 
-                          textTransform: 'uppercase', 
-                          backgroundColor: `${curso.color}15`, 
-                          padding: '4px 10px', 
-                          borderRadius: '8px' 
+                        <span style={{
+                          fontSize: '13px',
+                          fontWeight: '800',
+                          color: curso.color,
+                          textTransform: 'uppercase',
+                          backgroundColor: `${curso.color}15`,
+                          padding: '4px 10px',
+                          borderRadius: '8px'
                         }}>
                           {t('nivel')} {curso.nivel}
                         </span>
@@ -495,7 +495,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                       </div>
                     </div>
 
-                    <button 
+                    <button
                       onClick={() => alCambiarTab(curso.tab)}
                       className="btn-manual-accion primario"
                       style={{ height: '50px', fontSize: '15px', marginTop: '4px', flex: 'none', width: '100%' }}
@@ -507,133 +507,133 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
               </div>
             ) :
 
-            // 2. RENDER VISTA CUADRÍCULA (GRID COMPACTO)
-            vistaTipo === 'grid' ? (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px' }}>
-                {cursosFiltrados.map(curso => (
-                  <div 
-                    key={curso.id} 
-                    className="card-premium" 
-                    style={{ 
-                      boxSizing: 'border-box',
-                      borderTop: `5px solid ${curso.color}`, 
-                      display: 'flex', 
-                      flexDirection: 'column', 
-                      gap: '16px', 
-                      padding: '20px', 
-                      margin: 0,
-                      position: 'relative'
-                    }}
-                  >
-                    <button 
-                      onClick={() => toggleFavorito(curso.id)} 
-                      className="btn-favorito" 
-                      style={{ position: 'absolute', top: '12px', right: '12px', padding: '4px' }}
-                      title={favoritos.includes(curso.id) ? "Quitar de favoritos" : "Marcar como favorito"}
+              // 2. RENDER VISTA CUADRÍCULA (GRID COMPACTO)
+              vistaTipo === 'grid' ? (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px' }}>
+                  {cursosFiltrados.map(curso => (
+                    <div
+                      key={curso.id}
+                      className="card-premium"
+                      style={{
+                        boxSizing: 'border-box',
+                        borderTop: `5px solid ${curso.color}`,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '16px',
+                        padding: '20px',
+                        margin: 0,
+                        position: 'relative'
+                      }}
                     >
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill={favoritos.includes(curso.id) ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2.5">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                      </svg>
-                    </button>
+                      <button
+                        onClick={() => toggleFavorito(curso.id)}
+                        className="btn-favorito"
+                        style={{ position: 'absolute', top: '12px', right: '12px', padding: '4px' }}
+                        title={favoritos.includes(curso.id) ? "Quitar de favoritos" : "Marcar como favorito"}
+                      >
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill={favoritos.includes(curso.id) ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2.5">
+                          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                        </svg>
+                      </button>
 
-                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                      {curso.bandera}
-                      <div style={{ textAlign: 'left' }}>
-                        <span style={{ fontSize: '11px', fontWeight: '800', color: curso.color }}>
-                          {t('nivel')} {curso.nivel}
-                        </span>
-                        <h4 style={{ fontSize: '17px', fontWeight: '800', color: '#1e293b', margin: '2px 0 0 0', letterSpacing: '-0.25px' }}>
-                          {curso.nombre}
-                        </h4>
+                      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                        {curso.bandera}
+                        <div style={{ textAlign: 'left' }}>
+                          <span style={{ fontSize: '11px', fontWeight: '800', color: curso.color }}>
+                            {t('nivel')} {curso.nivel}
+                          </span>
+                          <h4 style={{ fontSize: '17px', fontWeight: '800', color: '#1e293b', margin: '2px 0 0 0', letterSpacing: '-0.25px' }}>
+                            {curso.nombre}
+                          </h4>
+                        </div>
                       </div>
-                    </div>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left' }}>
-                      <span style={{ fontSize: '13px', color: '#64748b' }}>{t('prof')}: {curso.profesor}</span>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12.5px', fontWeight: '700', color: '#64748b' }}>
-                        <span>{t('avanceCurso')}</span>
-                        <span>{curso.progreso}%</span>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left' }}>
+                        <span style={{ fontSize: '13px', color: '#64748b' }}>{t('prof')}: {curso.profesor}</span>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12.5px', fontWeight: '700', color: '#64748b' }}>
+                          <span>{t('avanceCurso')}</span>
+                          <span>{curso.progreso}%</span>
+                        </div>
+                        <div style={{ height: '6px', backgroundColor: '#e2e8f0', borderRadius: '3px', overflow: 'hidden' }}>
+                          <div style={{ height: '100%', width: `${curso.progreso}%`, backgroundColor: curso.color, borderRadius: '3px' }} />
+                        </div>
                       </div>
-                      <div style={{ height: '6px', backgroundColor: '#e2e8f0', borderRadius: '3px', overflow: 'hidden' }}>
-                        <div style={{ height: '100%', width: `${curso.progreso}%`, backgroundColor: curso.color, borderRadius: '3px' }} />
-                      </div>
+
+                      <button
+                        onClick={() => alCambiarTab(curso.tab)}
+                        className="btn-manual-accion primario"
+                        style={{ height: '36px', fontSize: '13.5px', flex: 'none', width: '100%', borderRadius: '10px' }}
+                      >
+                        {t('ingresar')}
+                      </button>
                     </div>
-
-                    <button 
-                      onClick={() => alCambiarTab(curso.tab)}
-                      className="btn-manual-accion primario"
-                      style={{ height: '36px', fontSize: '13.5px', flex: 'none', width: '100%', borderRadius: '10px' }}
-                    >
-                      {t('ingresar')}
-                    </button>
-                  </div>
-                ))}
-              </div>
-            ) :
-
-            // 3. RENDER VISTA LISTA (FILAS HORIZONTALES)
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              {cursosFiltrados.map(curso => (
-                <div key={curso.id} className="vista-lista-item" style={{ borderLeft: `6px solid ${curso.color}` }}>
-                  
-                  {/* Bandera y Título */}
-                  <div style={{ display: 'flex', gap: '16px', alignItems: 'center', width: '25%' }}>
-                    {curso.bandera}
-                    <div style={{ textAlign: 'left' }}>
-                      <h4 style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: 0 }}>
-                        {curso.nombre}
-                      </h4>
-                      <span style={{ fontSize: '12.5px', fontWeight: '700', color: curso.color }}>
-                        {t('nivel')} {curso.nivel}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Profesor */}
-                  <div style={{ width: '20%', textAlign: 'left', fontSize: '15px', color: '#64748b', fontWeight: '600' }}>
-                    {curso.profesor}
-                  </div>
-
-                  {/* Progreso */}
-                  <div style={{ width: '30%', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', fontWeight: '700', color: '#64748b' }}>
-                      <span>{t('avanceCurso')}</span>
-                      <span>{curso.progreso}%</span>
-                    </div>
-                    <div style={{ height: '8px', backgroundColor: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
-                      <div style={{ height: '100%', width: `${curso.progreso}%`, backgroundColor: curso.color, borderRadius: '4px' }} />
-                    </div>
-                  </div>
-
-                  {/* Acciones (Favorito + Botón) */}
-                  <div style={{ display: 'flex', gap: '16px', alignItems: 'center', width: '20%', justifyContent: 'flex-end' }}>
-                    
-                    {/* Botón Favorito */}
-                    <button 
-                      onClick={() => toggleFavorito(curso.id)} 
-                      className="btn-favorito"
-                      title={favoritos.includes(curso.id) ? t('quitarFavorito') : t('marcarFavorito')}
-                    >
-                      <svg viewBox="0 0 24 24" width="22" height="22" fill={favoritos.includes(curso.id) ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2.5">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                      </svg>
-                    </button>
-
-                    {/* Botón Ingresar */}
-                    <button 
-                      onClick={() => alCambiarTab(curso.tab)}
-                      className="btn-manual-accion primario"
-                      style={{ height: '40px', fontSize: '13.5px', padding: '0 20px', flex: 'none', width: 'auto', borderRadius: '12px' }}
-                    >
-                      {t('ingresar')}
-                    </button>
-
-                  </div>
-
+                  ))}
                 </div>
-              ))}
-            </div>
-            
+              ) :
+
+                // 3. RENDER VISTA LISTA (FILAS HORIZONTALES)
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                  {cursosFiltrados.map(curso => (
+                    <div key={curso.id} className="vista-lista-item" style={{ borderLeft: `6px solid ${curso.color}` }}>
+
+                      {/* Bandera y Título */}
+                      <div style={{ display: 'flex', gap: '16px', alignItems: 'center', width: '25%' }}>
+                        {curso.bandera}
+                        <div style={{ textAlign: 'left' }}>
+                          <h4 style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: 0 }}>
+                            {curso.nombre}
+                          </h4>
+                          <span style={{ fontSize: '12.5px', fontWeight: '700', color: curso.color }}>
+                            {t('nivel')} {curso.nivel}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Profesor */}
+                      <div style={{ width: '20%', textAlign: 'left', fontSize: '15px', color: '#64748b', fontWeight: '600' }}>
+                        {curso.profesor}
+                      </div>
+
+                      {/* Progreso */}
+                      <div style={{ width: '30%', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', fontWeight: '700', color: '#64748b' }}>
+                          <span>{t('avanceCurso')}</span>
+                          <span>{curso.progreso}%</span>
+                        </div>
+                        <div style={{ height: '8px', backgroundColor: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
+                          <div style={{ height: '100%', width: `${curso.progreso}%`, backgroundColor: curso.color, borderRadius: '4px' }} />
+                        </div>
+                      </div>
+
+                      {/* Acciones (Favorito + Botón) */}
+                      <div style={{ display: 'flex', gap: '16px', alignItems: 'center', width: '20%', justifyContent: 'flex-end' }}>
+
+                        {/* Botón Favorito */}
+                        <button
+                          onClick={() => toggleFavorito(curso.id)}
+                          className="btn-favorito"
+                          title={favoritos.includes(curso.id) ? t('quitarFavorito') : t('marcarFavorito')}
+                        >
+                          <svg viewBox="0 0 24 24" width="22" height="22" fill={favoritos.includes(curso.id) ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2.5">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                          </svg>
+                        </button>
+
+                        {/* Botón Ingresar */}
+                        <button
+                          onClick={() => alCambiarTab(curso.tab)}
+                          className="btn-manual-accion primario"
+                          style={{ height: '40px', fontSize: '13.5px', padding: '0 20px', flex: 'none', width: 'auto', borderRadius: '12px' }}
+                        >
+                          {t('ingresar')}
+                        </button>
+
+                      </div>
+
+                    </div>
+                  ))}
+                </div>
+
           )}
 
         </div>
@@ -700,9 +700,9 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
           <video
             key={idioma}
             src={
-              idioma === 'en' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/Ingles.mp4' :
-              idioma === 'it' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/Italiano.mp4' :
-              idioma === 'pt' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/Portugues.mp4' : ''
+              idioma === 'en' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/NuevoIngles.mp4' :
+                idioma === 'it' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/NuevoItaliano.mp4' :
+                  idioma === 'pt' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/NuevoPortugues.mp4' : ''
             }
             autoPlay
             muted={videoSilenciado}
@@ -712,7 +712,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
             style={{ position: 'absolute', top: 0, right: 0, left: esMovil ? 'auto' : 0, width: esMovil ? '65%' : '100%', height: '100%', objectFit: 'contain', objectPosition: 'right center', zIndex: 0 }}
           />
         )}
-        
+
         {/* Overlay oscuro en gradiente: oscuro a la izquierda para el texto, transparente a la derecha para el video */}
         {(idioma === 'en' || idioma === 'it' || idioma === 'pt') && (
           <>
@@ -766,7 +766,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
 
       {/* Grid del Dashboard Simplificado (Fila de Cursos + Feed de Novedades) */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
-        
+
         {/* Sección: Mis Cursos Activos (Carrusel DVD) */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '18px', width: '100%' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -774,17 +774,17 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
               <h3 style={{ fontSize: '22px', fontWeight: '800', color: '#1e293b', margin: '0' }}>
                 {t('misCursosActivos')}
               </h3>
-              
+
               {/* Botón Ver Todo */}
-              <button 
+              <button
                 onClick={() => setVerTodosLosCursos(true)}
                 className="btn-manual-accion secundario"
-                style={{ 
-                  height: '34px', 
-                  padding: '0 16px', 
-                  fontSize: '13px', 
-                  margin: 0, 
-                  textTransform: 'none', 
+                style={{
+                  height: '34px',
+                  padding: '0 16px',
+                  fontSize: '13px',
+                  margin: 0,
+                  textTransform: 'none',
                   fontWeight: '800',
                   borderRadius: '10px',
                   width: 'auto'
@@ -793,25 +793,25 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                 {t('verTodo')}
               </button>
             </div>
-            
+
             {/* Controles carrusel */}
             <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
               <span style={{ fontSize: '14px', color: '#94a3b8', fontWeight: '700', marginRight: '8px' }}>
                 {currentIndex + 1} - {esMovil ? currentIndex + 1 : Math.min(cursos.length, currentIndex + 3)} de {cursos.length}
               </span>
-              
+
               {/* Botón Izquierda */}
-              <button 
+              <button
                 onClick={irAlCursoAnterior}
                 disabled={currentIndex === 0}
                 className="btn-manual-accion secundario"
-                style={{ 
-                  width: '38px', 
-                  height: '38px', 
-                  borderRadius: '50%', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
+                style={{
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   cursor: currentIndex === 0 ? 'not-allowed' : 'pointer',
                   opacity: currentIndex === 0 ? 0.35 : 1,
                   padding: 0,
@@ -823,19 +823,19 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                   <polyline points="15 18 9 12 15 6" />
                 </svg>
               </button>
-              
+
               {/* Botón Derecha */}
-              <button 
+              <button
                 onClick={irAlCursoSiguiente}
                 disabled={currentIndex >= maxIndex}
                 className="btn-manual-accion secundario"
-                style={{ 
-                  width: '38px', 
-                  height: '38px', 
-                  borderRadius: '50%', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
+                style={{
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   cursor: currentIndex >= maxIndex ? 'not-allowed' : 'pointer',
                   opacity: currentIndex >= maxIndex ? 0.35 : 1,
                   padding: 0,
@@ -849,32 +849,32 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
               </button>
             </div>
           </div>
-          
+
           {/* Contenedor del carrusel */}
           <div style={{ display: 'flex', width: '100%', alignItems: 'center', position: 'relative' }}>
-            <div 
+            <div
               ref={containerRef}
-              style={{ 
-                flex: 1, 
-                overflowX: 'hidden', 
+              style={{
+                flex: 1,
+                overflowX: 'hidden',
                 scrollBehavior: 'smooth',
                 padding: '12px 4px'
               }}
             >
               <div style={{ display: 'flex', gap: '24px', width: '100%', boxSizing: 'border-box' }}>
                 {cursos.map(curso => (
-                  <div 
-                    key={curso.id} 
-                    className="card-premium" 
-                    style={{ 
+                  <div
+                    key={curso.id}
+                    className="card-premium"
+                    style={{
                       flex: `0 0 ${cardWidth}`,
                       boxSizing: 'border-box',
-                      borderTop: `6px solid ${curso.color}`, 
-                      display: 'flex', 
-                      flexDirection: 'column', 
+                      borderTop: `6px solid ${curso.color}`,
+                      display: 'flex',
+                      flexDirection: 'column',
                       justifyContent: 'space-between',
-                      gap: '24px', 
-                      padding: '32px', 
+                      gap: '24px',
+                      padding: '32px',
                       margin: 0,
                       boxShadow: '0 8px 16px rgba(0,0,0,0.02)'
                     }}
@@ -882,14 +882,14 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                     <div style={{ display: 'flex', gap: '18px', alignItems: 'center' }}>
                       {curso.bandera}
                       <div style={{ textAlign: 'left' }}>
-                        <span style={{ 
-                          fontSize: '13px', 
-                          fontWeight: '800', 
-                          color: curso.color, 
-                          textTransform: 'uppercase', 
-                          backgroundColor: `${curso.color}15`, 
-                          padding: '4px 10px', 
-                          borderRadius: '8px' 
+                        <span style={{
+                          fontSize: '13px',
+                          fontWeight: '800',
+                          color: curso.color,
+                          textTransform: 'uppercase',
+                          backgroundColor: `${curso.color}15`,
+                          padding: '4px 10px',
+                          borderRadius: '8px'
                         }}>
                           {t('nivel')} {curso.nivel}
                         </span>
@@ -914,7 +914,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                     </div>
 
                     {/* Botón de ingresar */}
-                    <button 
+                    <button
                       onClick={() => alCambiarTab(curso.tab)}
                       className="btn-manual-accion primario"
                       style={{ height: '50px', fontSize: '15px', marginTop: '4px', flex: 'none', width: '100%' }}
@@ -966,7 +966,7 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
             <header className="modal-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 24px', borderBottom: '2px solid var(--borde-color)' }}>
               <h3 className="modal-titulo" style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: '#1e293b' }}>{t('visualizandoRecurso')}</h3>
               <button onClick={() => setRecursoVisualizar(null)} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', display: 'flex' }}>
-                <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.5" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.5" fill="none"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
               </button>
             </header>
             <div className="modal-body" style={{ padding: '24px' }}>
@@ -990,13 +990,13 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                     <h5 style={{ fontWeight: '800', marginTop: '0', fontSize: '16.5px', color: '#1e293b' }}>Enlace de Recurso Externo</h5>
                     <p>Has abierto el recurso complementario en video para el estudio de pronombres relativos (<em>dont, où, qui, que</em>) en Francés B2.</p>
                     <p>Este video contiene 15 minutos de explicaciones interactivas por profesores nativos, analizando las diferencias sutiles entre "dont" (relativo posesivo/preposicional) y "où" (relativo de lugar o tiempo).</p>
-                    <a href="#video-ver" onClick={(e) => {e.preventDefault(); alert(t('simulacionReproduccion'));}} style={{ color: 'var(--color-celeste)', fontWeight: '800', textDecoration: 'underline' }}>Haga clic aquí para reproducir la lección en video</a>
+                    <a href="#video-ver" onClick={(e) => { e.preventDefault(); alert(t('simulacionReproduccion')); }} style={{ color: 'var(--color-celeste)', fontWeight: '800', textDecoration: 'underline' }}>Haga clic aquí para reproducir la lección en video</a>
                   </div>
                 )}
               </div>
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', gap: '10px' }}>
-                <button 
-                  className="btn-manual-accion primario" 
+                <button
+                  className="btn-manual-accion primario"
                   onClick={() => {
                     alert(t('simulacionDescarga'));
                     setRecursoVisualizar(null);
@@ -1005,9 +1005,9 @@ export default function ProgresoEstudiante({ usuario, alCambiarTab }) {
                 >
                   {t('descargarArchivo')}
                 </button>
-                <button 
-                  className="btn-manual-accion secundario" 
-                  onClick={() => setRecursoVisualizar(null)} 
+                <button
+                  className="btn-manual-accion secundario"
+                  onClick={() => setRecursoVisualizar(null)}
                   style={{ flex: 'none', padding: '0 20px', height: '40px', fontSize: '13.5px' }}
                 >
                   {t('cerrarVista')}

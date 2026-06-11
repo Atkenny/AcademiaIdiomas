@@ -179,18 +179,18 @@ export default function Login({ alIniciarSesion }) {
         setTimeout(() => {
           setCargando(false);
           if (perfilData && perfilData.rol === 'docente') {
-            alIniciarSesion({ 
+            alIniciarSesion({
               id: data.user.id,
-              email: emailNormalizado, 
+              email: emailNormalizado,
               rol: 'docente',
               nombres: perfilData.nombre,
               apellidos: perfilData.apellido
             });
           } else {
             // Si no está en perfiles o no es docente, asumimos estudiante
-            alIniciarSesion({ 
+            alIniciarSesion({
               id: data.user.id,
-              email: emailNormalizado, 
+              email: emailNormalizado,
               rol: 'estudiante',
               nombres: perfilData?.nombre || 'Usuario',
               apellidos: perfilData?.apellido || ''
@@ -253,12 +253,12 @@ export default function Login({ alIniciarSesion }) {
             </div>
           )}
           {vistaActual === 'registroDocente' && (
-            <RegistroDocente 
-              onVolver={() => setVistaActual('login')} 
+            <RegistroDocente
+              onVolver={() => setVistaActual('login')}
               onCompletar={(datos) => {
                 setDatosDocenteRegistrado(datos);
                 setVistaActual('exitoDocente');
-              }} 
+              }}
             />
           )}
           {vistaActual === 'exitoDocente' && (
@@ -273,8 +273,8 @@ export default function Login({ alIniciarSesion }) {
                   ¡Atención! Confirma la verificación en tu correo para poder acceder.
                 </p>
               </div>
-              
-              <button 
+
+              <button
                 onClick={descargarCredencialesPDF}
                 style={{ background: '#f0f9ff', color: '#0284c7', border: '2px solid #bae6fd', borderBottom: '4px solid #7dd3fc', padding: '12px 24px', borderRadius: '12px', fontWeight: '800', cursor: 'pointer', marginBottom: '16px', width: '100%', fontSize: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
                 onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(2px)'; e.currentTarget.style.borderBottomWidth = '2px'; }}
@@ -287,7 +287,7 @@ export default function Login({ alIniciarSesion }) {
                 </svg>
                 Guardar Credenciales en PDF
               </button>
-              
+
               <button className="login-btn-enviar" onClick={() => setVistaActual('login')} style={{ marginTop: '8px' }}>Volver al Inicio de Sesión</button>
             </div>
           )}
@@ -320,9 +320,9 @@ export default function Login({ alIniciarSesion }) {
           <video
             key={idioma} // Forzar recarga al cambiar idioma
             src={
-              idioma === 'en' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/Ingles.mp4' :
-              idioma === 'it' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/Italiano.mp4' :
-              idioma === 'pt' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/Portugues.mp4' : ''
+              idioma === 'en' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/NuevoIngles.mp4' :
+                idioma === 'it' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/Italiano.mp4' :
+                  idioma === 'pt' ? 'https://iravaxwvergxxgfytzxn.supabase.co/storage/v1/object/public/videos-bienvenida/Portugues.mp4' : ''
             }
             autoPlay
             muted={videoSilenciado}
@@ -343,7 +343,7 @@ export default function Login({ alIniciarSesion }) {
         )}
 
         {/* El botón de audio se movió adentro de marca-contenido */}
-        
+
         {/* Capa oscura superpuesta para que el texto resalte sobre el video */}
         {(idioma === 'en' || idioma === 'it' || idioma === 'pt') && (
           <div style={{
@@ -358,9 +358,9 @@ export default function Login({ alIniciarSesion }) {
         )}
 
         <div className="marca-contenido" style={{ position: 'relative', zIndex: 2, width: '100%', padding: '0 32px' }}>
-          
+
           {/* Header dinámico: Columna normal o Fila compacta con botón */}
-          <div className="login-institucional-pc" style={{ 
+          <div className="login-institucional-pc" style={{
             flexDirection: (idioma === 'en' || idioma === 'it' || idioma === 'pt') ? 'row' : 'column',
             background: (idioma === 'en' || idioma === 'it' || idioma === 'pt') ? 'transparent' : 'rgba(255, 255, 255, 0.08)',
             border: (idioma === 'en' || idioma === 'it' || idioma === 'pt') ? 'none' : '1.5px solid rgba(255, 255, 255, 0.15)',
@@ -371,12 +371,12 @@ export default function Login({ alIniciarSesion }) {
             width: '100%',
             justifyContent: (idioma === 'en' || idioma === 'it' || idioma === 'pt') ? 'center' : 'flex-start'
           }}>
-            
+
             <div className="institucional-logo-item" style={{ gap: '16px', margin: 0 }}>
               <img src="/unan_logo.webp" alt="UNAN Managua" className="institucional-logo-img" style={{ width: 'auto', minWidth: '80px', borderRadius: '12px', padding: '4px 12px' }} />
               {!(idioma === 'en' || idioma === 'it' || idioma === 'pt') && <span className="institucional-logo-titulo">Universidad Nacional Autónoma de Nicaragua, Managua (UNAN-Managua)</span>}
             </div>
-            
+
             <div className="institucional-logo-item" style={{ gap: '16px', margin: 0 }}>
               <img src="/setec_logo.webp" alt="SETEC" className="institucional-logo-img" style={{ width: 'auto', minWidth: '80px', borderRadius: '12px', padding: '4px 12px' }} />
               {!(idioma === 'en' || idioma === 'it' || idioma === 'pt') && <span className="institucional-logo-titulo">Secretaría Técnica para Atención a las Universidades (SETEC)</span>}
@@ -417,7 +417,7 @@ export default function Login({ alIniciarSesion }) {
                 )}
               </button>
             )}
-            
+
           </div>
         </div>
       </aside>
